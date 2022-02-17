@@ -1,4 +1,4 @@
-from numpy import random as nr
+from numpy import random as np
 from . import exceptions as ex
 
 
@@ -10,20 +10,11 @@ class Uniform:
         self._b = b
 
     def generate(self):
-        return nr.uniform(self._a, self._b)
+        return np.uniform(self._a, self._b)
 
-class Weibull:
-    def __init__(self, a, lamb):
-        self._a = a
+class Exponential:
+    def __init__(self, lamb):
         self._lamb = lamb
 
     def generate(self):
-        return self._lamb*nr.weibull(self._a)
-
-class Normal:
-    def __init__(self, mu, sigma):
-        self._mu = mu
-        self._sigma = sigma
-
-    def generate(self):
-        return nr.normal(self._mu, self._sigma)
+        return np.exponential(1 / self._lamb)

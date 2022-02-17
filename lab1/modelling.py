@@ -5,8 +5,7 @@ import math
 un_a = 0
 un_b = 10
 
-weib_a = 2
-weib_lamb = 10
+exp_lamb = 10
 
 gr_mu = 1
 gr_lamb_start = 0.1
@@ -23,18 +22,17 @@ def get_mu(a, lamb):
     return lamb
 
 def get_theor_params(lamb, mu):
-    ro = lamb/mu
-    return ro, ro/((1 - ro)*lamb)
+    ro = lamb / mu
+    return ro, ro / ((1 - ro) * lamb)
 
 def get_actual_params(lamb, lamb_var, mu, mu_var, time):
-    a = 1/lamb - math.sqrt(3/lamb_var)
-    b = 1/lamb + math.sqrt(3/lamb_var)
+    a = 1 / lamb - math.sqrt(3/lamb_var)
+    b = 1 / lamb + math.sqrt(3/lamb_var)
     if a < 0:
         a = 0
         b = 2/lamb
         
-    model = Modeller(a, b, weib_a, 1/mu)  # mu/math.gamma(1 + 1/weib_a)
-    # model = Modeller(1/lamb*0.5, 1/lamb*1.5, 1/mu*0.5, 1/mu*1.5)
+    model = Modeller(a, b, exp_lamb)
     ro, avg_wait_time = model.event_based_modelling(time)
     return ro, avg_wait_time
 
