@@ -105,7 +105,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_edit_unif_mean">
+      <widget class="QLineEdit" name="line_unif_intencity">
        <property name="font">
         <font>
          <family>DejaVu Sans</family>
@@ -143,7 +143,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_edit_unif_var">
+      <widget class="QLineEdit" name="line_unif_var">
        <property name="font">
         <font>
          <family>DejaVu Sans</family>
@@ -200,7 +200,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_edit_weib_mean">
+      <widget class="QLineEdit" name="line_exp_intencity">
        <property name="font">
         <font>
          <family>DejaVu Sans</family>

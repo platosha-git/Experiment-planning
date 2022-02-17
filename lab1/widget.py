@@ -24,26 +24,30 @@ class MainWindow(QWidget):
             ui = self.ui
 
             # Unform params
-            unif_mean = float(ui.line_edit_unif_mean.text())
-            if unif_mean <= 0:
-                raise ValueError('Необходимо mu > 0')
-            unif_var = float(ui.line_edit_unif_var.text())
+            unif_intencity = float(ui.line_unif_intencity.text())
+            unif_var = float(ui.line_unif_var.text())
+
+            if unif_intencity <= 0:
+                raise ValueError('Интенсивность должать быть положительной!')
+            
 
             # Exponent params
-            exp_mean = float(ui.line_edit_weib_mean.text())
-            if exp_mean <= 0:
-                raise ValueError('Необходимо mu > 0')
-            if exp_mean <= unif_mean:
-                raise ValueError('Загрузка системы должна быть меньше 1')
+            exp_intencity = float(ui.line_exp_intencity.text())
+            
+            if exp_intencity <= 0:
+                raise ValueError('Интенсивность должать быть положительной!')
+            if exp_intencity <= unif_intencity:
+                raise ValueError('Загрузка системы должна быть меньше 1!')
+
 
             # Input params
             time = int(ui.line_edit_time.text())
             if time <= 0:
                 raise ValueError('Необходимо время моделирования > 0')
 
-            theor_ro, theor_avg_wait_time = get_theor_params(unif_mean, exp_mean)
-            actual_ro, actual_avg_wait_time = get_actual_params(unif_mean, unif_var, exp_mean, time)
-            actual_avg_wait_time = actual_ro/((1 - actual_ro)*unif_mean)
+            theor_ro, theor_avg_wait_time = get_theor_params(unif_intencity, exp_intencity)
+            actual_ro, actual_avg_wait_time = get_actual_params(unif_intencity, unif_var, exp_intencity, time)
+            actual_avg_wait_time = actual_ro/((1 - actual_ro)*unif_intencity)
 
             self._show_results([theor_ro, theor_avg_wait_time],
                 [actual_ro, actual_avg_wait_time])        
