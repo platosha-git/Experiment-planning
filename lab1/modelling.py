@@ -19,7 +19,7 @@ def get_theor_params(lamb, mu):
     ro = lamb/mu
     return ro, ro/((1 - ro)*lamb)
 
-def get_actual_params(lamb, lamb_var, mu, mu_var, time):
+def get_actual_params(lamb, lamb_var, mu, time):
     a = 1/lamb - math.sqrt(3/lamb_var)
     b = 1/lamb + math.sqrt(3/lamb_var)
     if a < 0:
@@ -47,7 +47,7 @@ def get_actual_val_for_graph(mu, start_lamb, end_lamb, step_lamb, time):
     cur_lamb = start_lamb
 
     while(cur_lamb < end_lamb):
-        ro, avg_wait_time = get_actual_params(cur_lamb, 10, mu, mu/2, time)
+        ro, avg_wait_time = get_actual_params(cur_lamb, 10, mu, time)
         actual_x.append(ro)
         actual_y.append(avg_wait_time)
         cur_lamb += step_lamb

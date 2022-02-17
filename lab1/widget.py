@@ -35,7 +35,6 @@ class MainWindow(QWidget):
                 raise ValueError('Необходимо mu > 0')
             if exp_mean <= unif_mean:
                 raise ValueError('Загрузка системы должна быть меньше 1')
-            weib_var = float(ui.line_edit_weib_var.text())
 
             # Input params
             time = int(ui.line_edit_time.text())
@@ -43,7 +42,7 @@ class MainWindow(QWidget):
                 raise ValueError('Необходимо время моделирования > 0')
 
             theor_ro, theor_avg_wait_time = get_theor_params(unif_mean, exp_mean)
-            actual_ro, actual_avg_wait_time = get_actual_params(unif_mean, unif_var, exp_mean, weib_var, time)
+            actual_ro, actual_avg_wait_time = get_actual_params(unif_mean, unif_var, exp_mean, time)
             actual_avg_wait_time = actual_ro/((1 - actual_ro)*unif_mean)
 
             self._show_results([theor_ro, theor_avg_wait_time],
