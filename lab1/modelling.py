@@ -5,7 +5,7 @@ import math
 un_a = 0
 un_b = 10
 
-exp_lamb = 10
+weib_a = 5
 
 gr_mu = 1
 gr_lamb_start = 0.1
@@ -16,23 +16,29 @@ theor_x, theor_y = [], []
 actual_x, actual_y = [], []
 
 def get_lamb(a, b):
-    return (a + b) / 2
+    return (a + b)/2
 
 def get_mu(a, lamb):
     return lamb
 
 def get_theor_params(lamb, mu):
-    ro = lamb / mu
-    return ro, ro / ((1 - ro) * lamb)
+    ro = lamb/mu
+    return ro, ro/((1 - ro)*lamb)
 
 def get_actual_params(lamb, lamb_var, mu, mu_var, time):
-    a = 1 / lamb - math.sqrt(3/lamb_var)
-    b = 1 / lamb + math.sqrt(3/lamb_var)
+    # model = Modeller(1/lamb*0.5, 1/lamb*1.5, 1/mu*0.5, 1/mu*1.5)
+    # print(1/cur_lamb, 1/mu)
+    # print(lamb, lamb_var, 1/lamb - math.sqrt(3/lamb_var), 1/lamb + math.sqrt(3/lamb_var))
+    # a = 0.5/lamb
+    # b = 1.5/lamb
+    a = 1/lamb - math.sqrt(3/lamb_var)
+    b = 1/lamb + math.sqrt(3/lamb_var)
     if a < 0:
         a = 0
         b = 2/lamb
         
-    model = Modeller(a, b, exp_lamb)
+    model = Modeller(a, b, weib_a)
+    # model = Modeller(1/lamb*0.5, 1/lamb*1.5, 1/mu*0.5, 1/mu*1.5)
     ro, avg_wait_time = model.event_based_modelling(time)
     return ro, avg_wait_time
 
@@ -82,3 +88,6 @@ def get_graph(time):
     get_theor_val_for_graph(gr_mu, gr_lamb_start, gr_lamb_end, gr_labm_step)
     get_actual_val_for_graph(gr_mu, gr_lamb_start, gr_lamb_end, gr_labm_step, time)
     do_plot("Загрузка системы", "Среднее время ожидания", "theoretical graph", "actual graph")
+
+
+

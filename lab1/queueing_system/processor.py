@@ -1,4 +1,4 @@
-from numpy import random as nr
+from numpy import random as np
 from .generator import Generator
 
 
@@ -16,7 +16,7 @@ class Processor(Generator):
             self._processed_requests += 1
             self._current_queue_size -= 1
             self.emit_request()
-            if nr.random_sample() <= self._reenter_probability:
+            if np.random_sample() <= self._reenter_probability:
                 self._reentered_requests += 1
                 self._processed_requests -= 1
                 self.receive_request()

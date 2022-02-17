@@ -4,9 +4,9 @@ from .processor import Processor
 
 
 class Modeller:
-    def __init__(self, uniform_a, uniform_b, exp_lamb):
+    def __init__(self, uniform_a, uniform_b, weibull_a):
         self._generator = Generator(Uniform(uniform_a, uniform_b))
-        self._processor = Processor(Exponential(exp_lamb))
+        self._processor = Processor(Exponential(weibull_a))
         self._generator.add_receiver(self._processor)
 
     def event_based_modelling(self, end_time):
