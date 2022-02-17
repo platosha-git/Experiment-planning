@@ -61,11 +61,11 @@ class MainWindow(QWidget):
     def _show_results(self, theor_res, actual_res):
         ui = self.ui
 
-        ui.line_edit_theor_ro.setText(str(round(theor_res[0], 3)))
-        ui.line_edit_theor_avg_wait_time.setText(str(round(theor_res[1], 3)))
+        ui.line_theor_load.setText(str(round(theor_res[0], 3)))
+        ui.line_theor_wait_time.setText(str(round(theor_res[1], 3)))
 
-        ui.line_edit_actual_ro.setText(str(round(actual_res[0], 3)))
-        ui.line_edit_actual_avg_wait_time.setText(str(round(actual_res[1], 3)))
+        ui.line_actual_load.setText(str(round(actual_res[0], 3)))
+        ui.line_actual_wait_time.setText(str(round(actual_res[1], 3)))
 
     @pyqtSlot(name='on_graphButton_clicked')
     def _show_graph(self):

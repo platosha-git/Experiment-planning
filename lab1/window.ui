@@ -321,7 +321,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_edit_theor_ro">
+      <widget class="QLineEdit" name="line_theor_load">
        <property name="font">
         <font>
          <family>Monaco</family>
@@ -359,7 +359,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_edit_theor_avg_wait_time">
+      <widget class="QLineEdit" name="line_theor_wait_time">
        <property name="font">
         <font>
          <family>Monaco</family>
@@ -416,7 +416,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_edit_actual_ro">
+      <widget class="QLineEdit" name="line_actual_load">
        <property name="font">
         <font>
          <family>Monaco</family>
@@ -454,7 +454,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="line_edit_actual_avg_wait_time">
+      <widget class="QLineEdit" name="line_actual_wait_time">
        <property name="font">
         <font>
          <family>Monaco</family>

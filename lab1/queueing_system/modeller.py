@@ -4,9 +4,9 @@ from .processor import Processor
 
 
 class Modeller:
-    def __init__(self, uniform_a, uniform_b, weibull_a):
+    def __init__(self, uniform_a, uniform_b, exp_lambda):
         self._generator = Generator(Uniform(uniform_a, uniform_b))
-        self._processor = Processor(Exponential(weibull_a))
+        self._processor = Processor(Exponential(exp_lambda))
         self._generator.add_receiver(self._processor)
 
     def event_based_modelling(self, end_time):
@@ -28,36 +28,35 @@ class Modeller:
                 gen_period += generator.next_time()
                 cur_time = gen_period
                 start_times.append(cur_time)
+
             if gen_period >= proc_period:
                 processor.process()
+                
                 if processor.current_queue_size > 0:
                     proc_period += processor.next_time()
                 else:
                     proc_period = gen_period + processor.next_time()
+                
                 cur_time = proc_period
                 end_times.append(cur_time)
         
-        avg_wait_time = 0
-        # print(len(start_times), len(end_times))
+        wait_time = 0
         request_count = len(end_times)
 
         tmp = []
         for i in range(request_count):
-            avg_wait_time += end_times[i] - start_times[i]
+            wait_time += end_times[i] - start_times[i]
             tmp.append(end_times[i] - start_times[i])
         
         if request_count > 0:
-            avg_wait_time /= request_count
-        # print("start_times", start_times)
-        # print("end_times", end_times)
-        # print(tmp)
+            wait_time /= request_count
 
         actual_lamb = self._generator.get_avg_intensity()
         actual_mu = self._processor.get_avg_intensity()
         ro = actual_lamb/actual_mu
-        # print("actual_ro", actual_lamb, actual_mu)
 
-        return ro, avg_wait_time
+        return ro, wait_time
+
 
     def time_based_modelling(self, request_count, dt):
         generator = self._generator
@@ -71,6 +70,7 @@ class Modeller:
             if gen_period <= current_time:
                 generator.emit_request()
                 gen_period += generator.next_time()
+                
             if current_time >= proc_period:
                 processor.process()
                 if processor.current_queue_size > 0:
