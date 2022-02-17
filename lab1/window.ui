@@ -247,7 +247,7 @@
     <string>Время моделирования:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="line_edit_time">
+  <widget class="QLineEdit" name="line_time">
    <property name="geometry">
     <rect>
      <x>230</x>

@@ -28,29 +28,31 @@ class MainWindow(QWidget):
             unif_var = float(ui.line_unif_var.text())
 
             if unif_intencity <= 0:
-                raise ValueError('Интенсивность должать быть положительной!')
+                raise ValueError('Интенсивность должна быть положительной!')
             
 
             # Exponent params
             exp_intencity = float(ui.line_exp_intencity.text())
             
             if exp_intencity <= 0:
-                raise ValueError('Интенсивность должать быть положительной!')
+                raise ValueError('Интенсивность должна быть положительной!')
             if exp_intencity <= unif_intencity:
                 raise ValueError('Загрузка системы должна быть меньше 1!')
 
 
-            # Input params
-            time = int(ui.line_edit_time.text())
+            # Time params
+            time = int(ui.line_time.text())
             if time <= 0:
-                raise ValueError('Необходимо время моделирования > 0')
+                raise ValueError('Время должно быть положительным!')
 
-            theor_ro, theor_avg_wait_time = get_theor_params(unif_intencity, exp_intencity)
-            actual_ro, actual_avg_wait_time = get_actual_params(unif_intencity, unif_var, exp_intencity, time)
-            actual_avg_wait_time = actual_ro/((1 - actual_ro)*unif_intencity)
+            theor_load, theor_wait_time = get_theor_params(unif_intencity, exp_intencity)
+            
+            actual_load, actual_wait_time = get_actual_params(unif_intencity, unif_var, exp_intencity, time)
+            actual_wait_time = actual_load / ((1 - actual_load) * unif_intencity)
 
-            self._show_results([theor_ro, theor_avg_wait_time],
-                [actual_ro, actual_avg_wait_time])        
+            self._show_results([theor_load, theor_wait_time], 
+                                [actual_load, actual_wait_time])        
+
         except ValueError as e:
             QMessageBox.warning(self, 'Ошибка', 'Ошибка входных данных!\n' + str(e))
         except Exception as e:
@@ -70,10 +72,10 @@ class MainWindow(QWidget):
         try:
             ui = self.ui
 
-            # Input params
-            time = int(ui.line_edit_time.text())
+            # Time params
+            time = int(ui.line_time.text())
             if time <= 0:
-                raise ValueError('Необходимо время моделирования > 0')
+                raise ValueError('Время должно быть положительным!')
 
             get_graph(time)
 
