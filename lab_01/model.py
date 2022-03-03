@@ -50,25 +50,11 @@ def create_graph():
                 di = 0.025
             i += di
 
-        # elif i < 0.75:
-        #     res.append(getAvgWaitingTime(i, 500))
-        #     i += 0.05
-        # else:
-        #     res.append(getAvgWaitingTime(i, 500))
-        #     i += 0.025
-        
-        # i += 0.15 * i
-
     i = 1
     mas.append(i)
     res.append(getAvgWaitingTime(i, 100))
-        # if i < 0.1:
-        #     i += 0.01
-        # else:
-        #     i += 0.1
 
     mpl.style.use('seaborn')
-    #plt.plot(mas, res, '#d3b3ff')
     plt.scatter(mas, res, color='orange', s=10, marker='o')
 
     p = np.linspace(0, 1, 300)
@@ -78,28 +64,27 @@ def create_graph():
     #plt.plot(mas, res, '-')
 
     plt.grid(True)
-    plt.title("Генератор: экспоненциальный; ОА: нормальный")
+    plt.title("Генератор: равномерный; ОА: экспоненциальный")
     plt.ylabel('Время ожидания заявки в очереди')
     plt.xlabel('Загрузка системы')
     plt.show()
 
-#print(getAvgWaitingTime(0.8, 1000))
-
 if __name__ == "__main__":
     terminal = Terminal()
 
-    l_coming = 1/5
-    mu_handling = 1/4
+    l_coming = 5
+    mu_handling = 3
     sigma_handling = 1
 
-    maxTimeModulation = 1000
+    maxTimeModulation = 100
 
-    device = Device("ОA", timeDistribution=generatorGauss(1 / mu_handling, sigma_handling), next=terminal.process)
+    device = Device("ОA", timeDistribution=generatorExponent(1 / mu_handling), next=terminal.process)
 
     # capacity=-1 -- очередь бесконечная
     storage: LoadBalancer = LoadBalancer("Буфер", [device], terminal, capacity=-1)
 
-    generator: Generator = Generator(generatorExponent(1 / l_coming), storage.process)
+    #generator: Generator = Generator(generatorExponent(1 / l_coming), storage.process)
+    generator: Generator = Generator(generatorUD(1 / mu_handling, 1 / sigma_handling), storage.process)
 
     eventModel: EventModel = EventModel(terminal)
     eventModel.addEvents(generator.process())
@@ -115,7 +100,7 @@ if __name__ == "__main__":
     print(f"Эксп. загрузка СМО: {generator.Lambda / device.Mu:.2f}")
 
     # если загрузка > 1 - нестационарный режим (неустоявшийся)
-    p = l_coming / mu_handling
+    p = mu_handling / l_coming
     print(f"Теор. загрузка СМО: {p:.2f}")
 
     # Работает, только для экспоненциальных законов

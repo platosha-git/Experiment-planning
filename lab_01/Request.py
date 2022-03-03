@@ -8,6 +8,3 @@ class Request(Event):
             name = f"request №{reqId}"
         Event.__init__(self, initTime, next, name)
         self.reqId = reqId
-
-    # def __str__(self) -> str:
-    #     return self.name.ljust(46) + f"{self.time:.2f} min"

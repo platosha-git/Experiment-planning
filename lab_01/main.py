@@ -23,20 +23,20 @@ class mywindow(QMainWindow):
 
     def onModelBtnClick(self):
         try:
-            l_coming = self.ui.spinbox_intensivity_gen.value()
-            mu_handling = self.ui.spinbox_intensivity_oa.value()
-            sigma_handling = self.ui.spinbox_intensivity_oa_range.value()
+            l_coming = self.ui.spinbox_intensivity_oa.value()
+            mu_handling = self.ui.spinbox_intensivity_gen.value()
+            sigma_handling = self.ui.spinbox_intensivity_gen_range.value()
             maxTimeModulation = self.ui.spinbox_time_model.value()
 
             terminal = Terminal()
-            device = Device("ОA", timeDistribution=generatorGauss(1 / mu_handling, sigma_handling), next=terminal.process)
-            
-            #device = Device("ОA", timeDistribution=generatorExponent(1 / mu_handling), next=terminal.process)
+            #device = Device("ОA", timeDistribution=generatorGauss(1 / mu_handling, sigma_handling), next=terminal.process)
+            device = Device("ОA", timeDistribution=generatorExponent(1 / mu_handling), next=terminal.process)
 
             # capacity=-1 -- очередь бесконечная
             storage: LoadBalancer = LoadBalancer("Буфер", [device], terminal, capacity=-1)
 
-            generator: Generator = Generator(generatorExponent(1 / l_coming), storage.process)
+            #generator: Generator = Generator(generatorExponent(1 / l_coming), storage.process)
+            generator: Generator = Generator(generatorUD(1 / mu_handling, 1 / sigma_handling), storage.process)
 
             eventModel: EventModel = EventModel(terminal)
             eventModel.addEvents(generator.process())
@@ -47,24 +47,23 @@ class mywindow(QMainWindow):
 
             self.addItemTableWidget(1, 1, round(storage.totalWaitingTime / (storage.processedRequest + len(storage.queue)), 2))
 
-            print(f"max queue length storage: {storage.maxQueue}")
+            print(f"Максимальный размер буфера: {storage.maxQueue}")
             print(f"Эксп. интенсивность генератора: {generator.Lambda:.2f}")
             print(f"Эксп. интенсивность ОА: {device.Mu:.2f}")
             self.addItemTableWidget(0, 1, round(generator.Lambda / device.Mu, 2))
 
             # если загрузка > 1 - нестационарный режим (неустоявшийся)
-            p = l_coming / mu_handling
+            p = mu_handling / l_coming
             self.addItemTableWidget(0, 0, round(p, 2))
 
             if p < 1:
-                # изучить
                 avg_size = p * p / (1 - p)
                 #print(f"Ср. длина очереди: {avg_size:.2f}")
 
-                avg_t = avg_size / l_coming
+                avg_t = avg_size / mu_handling
                 # print(f"Ср. время ожидания: {avg_t:.2f}")
 
-                t_avg = p / (1 - p) / l_coming
+                t_avg = p / (1 - p) / mu_handling
                 print(avg_t)
                 self.addItemTableWidget(1, 0, '-')
             else:
