@@ -68,6 +68,7 @@ class mywindow(QMainWindow):
                 self.addItemTableWidget(1, 0, '-')
             else:
                 self.addItemTableWidget(1, 0, '-')
+
             # Работает, только для экспоненциальных законов
             #print(f"Вероятность что ОА занят: {p:.2f}")
 
@@ -93,7 +94,6 @@ class mywindow(QMainWindow):
             msgBox.exec()
 
     def onGraphBtnClick(self):
-        print(2)
         create_graph()
 
 if __name__ == "__main__":

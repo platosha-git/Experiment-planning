@@ -219,7 +219,7 @@
      <rect>
       <x>10</x>
       <y>350</y>
-      <width>491</width>
+      <width>471</width>
       <height>151</height>
      </rect>
     </property>
@@ -230,12 +230,12 @@
     </row>
     <row>
      <property name="text">
-      <string>Ср время ожидания завки в очереди</string>
+      <string>Среднее время завки в очереди</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>Обработанные заявки</string>
+      <string>Количество обработанных заявок</string>
      </property>
     </row>
     <row>
