@@ -225,7 +225,7 @@
     </property>
     <row>
      <property name="text">
-      <string>Загруженность системы</string>
+      <string>Загрузка системы</string>
      </property>
     </row>
     <row>

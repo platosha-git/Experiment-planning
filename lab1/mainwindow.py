@@ -115,7 +115,7 @@ class Ui_MainWindow(object):
         self.pushButton_model.setText(_translate("MainWindow", "Моделировать"))
         self.pushButton_graph.setText(_translate("MainWindow", "Построить график"))
         item = self.tableWidget.verticalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Загруженность системы"))
+        item.setText(_translate("MainWindow", "Загрузка системы"))
         item = self.tableWidget.verticalHeaderItem(1)
         item.setText(_translate("MainWindow", "Среднее время завки в очереди"))
         item = self.tableWidget.verticalHeaderItem(2)
@@ -126,13 +126,3 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "Теоретич."))
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Фактич."))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
