@@ -68,7 +68,7 @@
       <x>10</x>
       <y>30</y>
       <width>521</width>
-      <height>141</height>
+      <height>144</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
@@ -260,7 +260,7 @@
       <x>10</x>
       <y>30</y>
       <width>521</width>
-      <height>141</height>
+      <height>144</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
@@ -470,46 +470,6 @@
      <string>Новый столбец</string>
     </property>
    </column>
-   <column>
-    <property name="text">
-     <string>Новый столбец</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Новый столбец</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Новый столбец</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Новый столбец</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Новый столбец</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Новый столбец</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Новый столбец</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Новый столбец</string>
-    </property>
-   </column>
    <item row="0" column="0">
     <property name="text">
      <string>№</string>
@@ -552,7 +512,7 @@
    </item>
    <item row="0" column="5">
     <property name="text">
-     <string>x4</string>
+     <string>x1x2</string>
     </property>
     <property name="textAlignment">
      <set>AlignCenter</set>
@@ -560,7 +520,7 @@
    </item>
    <item row="0" column="6">
     <property name="text">
-     <string>x1x2</string>
+     <string>x1x3</string>
     </property>
     <property name="textAlignment">
      <set>AlignCenter</set>
@@ -568,7 +528,7 @@
    </item>
    <item row="0" column="7">
     <property name="text">
-     <string>x1x3</string>
+     <string>x2x3</string>
     </property>
     <property name="textAlignment">
      <set>AlignCenter</set>
@@ -576,7 +536,7 @@
    </item>
    <item row="0" column="8">
     <property name="text">
-     <string>x1x4</string>
+     <string>x1x2x3</string>
     </property>
     <property name="textAlignment">
      <set>AlignCenter</set>
@@ -584,7 +544,7 @@
    </item>
    <item row="0" column="9">
     <property name="text">
-     <string>x2x3</string>
+     <string>Y</string>
     </property>
     <property name="textAlignment">
      <set>AlignCenter</set>
@@ -592,77 +552,13 @@
    </item>
    <item row="0" column="10">
     <property name="text">
-     <string>x2x4</string>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="11">
-    <property name="text">
-     <string>x3x4</string>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="12">
-    <property name="text">
-     <string>x1x2x3</string>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="13">
-    <property name="text">
-     <string>x1x2x4</string>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="14">
-    <property name="text">
-     <string>x1x3x4</string>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="15">
-    <property name="text">
-     <string>x2x3x4</string>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="16">
-    <property name="text">
-     <string>x1x2x3x4</string>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="17">
-    <property name="text">
-     <string>Y</string>
-    </property>
-    <property name="textAlignment">
-     <set>AlignCenter</set>
-    </property>
-   </item>
-   <item row="0" column="18">
-    <property name="text">
      <string>Yл</string>
     </property>
     <property name="textAlignment">
      <set>AlignCenter</set>
     </property>
    </item>
-   <item row="0" column="19">
+   <item row="0" column="11">
     <property name="text">
      <string>Yнл</string>
     </property>
@@ -764,7 +660,7 @@
       <x>10</x>
       <y>30</y>
       <width>291</width>
-      <height>132</height>
+      <height>144</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_8">

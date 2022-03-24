@@ -64,12 +64,11 @@ class MainWindow(QWidget):
     def _show_results(self, table, regr):
         ui = self.ui
 
-        lin_regr = ("y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4" % \
-                               (regr[0], regr[1], regr[2], regr[3], regr[4]))
+        lin_regr = ("y = %.3f + %.3fx1 + %.3fx2 + %.3fx3" % \
+                               (regr[0], regr[1], regr[2], regr[3]))
         
-        nonlin_regr = ("y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx3x4+ %.3fx1x2x3 + %.3fx1x2x4 + %.3fx1x3x4 + %.3fx2x3x4 + %.3fx1x2x3x4" % \
-            (regr[0], regr[1], regr[2], regr[3], regr[4], regr[5], regr[6], regr[7], regr[8], regr[9], 
-            regr[10], regr[11], regr[12], regr[13], regr[14], regr[15]))
+        nonlin_regr = ("y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx1x2 + %.3fx1x3 + %.3fx2x3 + %.3fx1x2x3" % \
+                        (regr[0], regr[1], regr[2], regr[3], regr[4], regr[5], regr[6], regr[7]))
 
         ui.line_edit_lin_res.setText(str(lin_regr))
         ui.line_edit_nonlin_res.setText(str(nonlin_regr))

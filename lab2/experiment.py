@@ -2,7 +2,7 @@ from queueing_system.modeller import Modeller
 import numpy as np
 import math
 
-FACTORS_NUMBER = 4
+FACTORS_NUMBER = 3
 MATR_SIZE = 2**FACTORS_NUMBER
 MOD_NUMBER = 1 # Лучше бртать 10
 
@@ -34,12 +34,12 @@ class Experiment():
 
             matrix[i][0] = 1
 
-            # matrix[i][4] = matrix[i][1] * matrix[i][2]
-            # matrix[i][5] = matrix[i][1] * matrix[i][3]
-            # matrix[i][6] = matrix[i][2] * matrix[i][3]
-            # matrix[i][7] = matrix[i][1] * matrix[i][2] * matrix[i][3]
+            matrix[i][4] = matrix[i][1] * matrix[i][2]
+            matrix[i][5] = matrix[i][1] * matrix[i][3]
+            matrix[i][6] = matrix[i][2] * matrix[i][3]
+            matrix[i][7] = matrix[i][1] * matrix[i][2] * matrix[i][3]
 
-            matrix[i][5] = matrix[i][1] * matrix[i][2]
+            '''matrix[i][5] = matrix[i][1] * matrix[i][2]
             matrix[i][6] = matrix[i][1] * matrix[i][3]
             matrix[i][7] = matrix[i][1] * matrix[i][4]
             matrix[i][8] = matrix[i][2] * matrix[i][3]
@@ -52,7 +52,7 @@ class Experiment():
             matrix[i][14] = matrix[i][2] * matrix[i][3] * matrix[i][4]
 
             matrix[i][15] = matrix[i][1] * matrix[i][2] * matrix[i][3] * matrix[i][4]
-            
+            '''
         return matrix
     
     def calc_xmat(self, plan):
@@ -119,9 +119,7 @@ class Experiment():
 
     def calculate(self):
         matrix = self.get_matrix()
-
         xmat = self.calc_xmat(matrix)
-
         y = list()
             
         for exp in matrix:
