@@ -4,7 +4,7 @@ from .processor import Processor
 
 
 class Modeller:
-    def __init__(self, uniform_a, uniform_b, exp_lamb, m):
+    def __init__(self, uniform_a, uniform_b, exp_lamb):
         self._generator = Generator(Uniform(uniform_a, uniform_b))
         # self._processor = Processor(Weibull(weibull_a, weibull_lamb, m))
         # self._processor = Processor(Normal(weibull_a, weibull_lamb))
@@ -50,14 +50,11 @@ class Modeller:
         
         if request_count > 0:
             avg_wait_time /= request_count
-        # print("start_times", start_times)
-        # print("end_times", end_times)
-        # print(tmp)
 
         actual_lamb = self._generator.get_avg_intensity()
         actual_mu = self._processor.get_avg_intensity()
         ro = actual_lamb/actual_mu
-        print("actual_ro", actual_lamb, actual_mu)
+        #print("actual_ro", actual_lamb, actual_mu)
 
         return ro, avg_wait_time
 

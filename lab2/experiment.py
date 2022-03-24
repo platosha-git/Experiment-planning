@@ -130,7 +130,7 @@ class Experiment():
 
             exp_res = 0
             for i in range(MOD_NUMBER):
-                model = Modeller(a, b, weib_a, 1/pm_int) 
+                model = Modeller(a, b, weib_a) 
                 ro, avg_wait_time = model.event_based_modelling(self.time)
                 exp_res += avg_wait_time
             exp_res /= MOD_NUMBER
@@ -148,8 +148,8 @@ class Experiment():
             new_gen_var = self.scale_factor(gen_var, self.min_gen_var, self.max_gen_var)
             new_pm_int = self.scale_factor(pm_int, self.min_pm_int, self.max_pm_int)
 
-            a, b, weib_a = self.param_convert(1, new_gen_int, new_gen_var, new_pm_int)
-            model = Modeller(a, b, weib_a, pm_int) 
+            a, b, weib_a = self.param_convert(new_gen_int, new_gen_var, new_pm_int)
+            model = Modeller(a, b, weib_a) 
             ro, avg_wait_time = model.event_based_modelling(self.time)
             exp_res += avg_wait_time
                 
