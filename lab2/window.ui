@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1259</width>
+    <width>1048</width>
     <height>790</height>
    </rect>
   </property>
@@ -33,7 +33,7 @@
     <rect>
      <x>10</x>
      <y>260</y>
-     <width>841</width>
+     <width>761</width>
      <height>41</height>
     </rect>
    </property>
@@ -187,7 +187,7 @@
     <rect>
      <x>440</x>
      <y>10</y>
-     <width>411</width>
+     <width>331</width>
      <height>111</height>
     </rect>
    </property>
@@ -205,7 +205,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>391</width>
+      <width>311</width>
       <height>71</height>
      </rect>
     </property>
@@ -268,7 +268,7 @@
   <widget class="QTableWidget" name="table">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>10</x>
      <y>480</y>
      <width>801</width>
      <height>271</height>
@@ -475,7 +475,7 @@
     <rect>
      <x>10</x>
      <y>360</y>
-     <width>841</width>
+     <width>801</width>
      <height>91</height>
     </rect>
    </property>
@@ -537,7 +537,7 @@
   <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
-     <x>930</x>
+     <x>860</x>
      <y>10</y>
      <width>161</width>
      <height>161</height>
@@ -584,7 +584,7 @@
         </font>
        </property>
        <property name="text">
-        <string>1</string>
+        <string>-1</string>
        </property>
       </widget>
      </item>
@@ -610,7 +610,7 @@
         </font>
        </property>
        <property name="text">
-        <string>1</string>
+        <string>-1</string>
        </property>
       </widget>
      </item>
@@ -636,7 +636,7 @@
         </font>
        </property>
        <property name="text">
-        <string>1</string>
+        <string>-1</string>
        </property>
       </widget>
      </item>
@@ -646,10 +646,10 @@
   <widget class="QPushButton" name="checkButton">
    <property name="geometry">
     <rect>
-     <x>930</x>
+     <x>860</x>
      <y>180</y>
      <width>161</width>
-     <height>31</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
@@ -705,7 +705,7 @@
     <rect>
      <x>10</x>
      <y>320</y>
-     <width>841</width>
+     <width>801</width>
      <height>16</height>
     </rect>
    </property>
@@ -718,12 +718,25 @@
     <rect>
      <x>10</x>
      <y>330</y>
-     <width>841</width>
+     <width>801</width>
      <height>16</height>
     </rect>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line_3">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>0</y>
+     <width>20</width>
+     <height>751</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
    </property>
   </widget>
  </widget>
