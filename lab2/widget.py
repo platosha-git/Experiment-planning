@@ -95,10 +95,9 @@ class MainWindow(QWidget):
             
             gen_int = float(ui.line_edit_gen_int.text())
             gen_var = float(ui.line_edit_gen_var.text())
-
             pm_int = float(ui.line_edit_pm_int.text())
-            pm_var = float(ui.line_edit_pm_var.text())
-            if abs(gen_int) > 1 or abs(gen_var) > 1 or abs(pm_int) > 1 or abs(pm_var) > 1:
+
+            if abs(gen_int) > 1 or abs(gen_var) > 1 or abs(pm_int) > 1:
                 raise ValueError('Координаты точки должны находится в диапазоне [-1; 1]')
 
             # Input params
@@ -106,7 +105,7 @@ class MainWindow(QWidget):
             if time <= 0:
                 raise ValueError('Необходимо время моделирования > 0')
 
-            res = self.experiment.check(gen_int, gen_var, pm_int, pm_var)
+            res = self.experiment.check(gen_int, gen_var, pm_int)
 
             self._show_table(res)        
         except ValueError as e:
@@ -116,17 +115,15 @@ class MainWindow(QWidget):
 
     def _show_table(self, res):
         ui = self.ui
-        gen_int = res[0]
-        gen_var = res[1]
-        pm_int = res[2]
-        pm_var = res[3]
-        exp_res = res[4]
-        lin_res = res[5]
-        nonlin_res = res[6]
-        res = [1, gen_int, gen_var, pm_int, pm_var, \
-                gen_int*gen_var, gen_int*pm_int, pm_int*pm_var, gen_var*pm_int, gen_var*pm_var, pm_int*pm_var, \
-                gen_int*gen_var*pm_int, gen_int*gen_var*pm_var, gen_int*pm_int*pm_var, gen_var*pm_int*pm_var, \
-                gen_int*gen_var*pm_int*pm_var, exp_res, lin_res, nonlin_res]
+        x1 = res[0]
+        x2 = res[1]
+        x3 = res[2]
+        exp_res = res[3]
+        lin_res = res[4]
+        nonlin_res = res[5]
+        res = [1, x1, x2, x3, \
+                x1*x2, x1*x3, x2*x3, x1*x2*x3, \
+                exp_res, lin_res, nonlin_res]
         # res[5] = res[4] + nr.uniform(-0.1, 0.1)
         # res[6] = res[4] + nr.uniform(-0.01, 0.01)
 

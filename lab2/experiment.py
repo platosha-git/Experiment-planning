@@ -28,9 +28,9 @@ class Experiment():
         for i in range(MATR_SIZE):
             for j in range(1, FACTORS_NUMBER + 1):
                 if i // (2 ** (FACTORS_NUMBER - j)) % 2 == 1:
-                    matrix[i][j] = 1
-                else:
                     matrix[i][j] = -1
+                else:
+                    matrix[i][j] = 1
 
             matrix[i][0] = 1
 
@@ -142,30 +142,26 @@ class Experiment():
         plan, self.b = self.expand_plan(matrix, y, xmat)
         return plan, self.b
 
-    def check(self, gen_int, gen_var, pm_int, pm_var):
+    def check(self, gen_int, gen_var, pm_int):
 
         exp_res = 0
         for i in range(MOD_NUMBER):
             new_gen_int = self.scale_factor(gen_int, self.min_gen_int, self.max_gen_int)
             new_gen_var = self.scale_factor(gen_var, self.min_gen_var, self.max_gen_var)
             new_pm_int = self.scale_factor(pm_int, self.min_pm_int, self.max_pm_int)
-            new_pm_var = self.scale_factor(pm_var, self.min_pm_var, self.max_pm_var)
 
-            a, b, weib_a, weib_lamb = self.param_convert(new_gen_int, new_gen_var, new_pm_int, new_pm_var)
+            a, b, weib_a, weib_lamb = self.param_convert(1, new_gen_int, new_gen_var, new_pm_int)
             model = Modeller(a, b, weib_a, weib_lamb, pm_int) 
             ro, avg_wait_time = model.event_based_modelling(self.time)
             exp_res += avg_wait_time
                 
         exp_res /= MOD_NUMBER
         
-        lin_res = self.b[0] + self.b[1]*gen_int + self.b[2]*gen_var + self.b[3]*pm_int + self.b[4]*pm_var
-        nonlin_res = self.b[0] + self.b[1]*gen_int + self.b[2]*gen_var + self.b[3]*pm_int + self.b[4]*pm_var + \
-            self.b[5]*gen_int*gen_var + self.b[6]*gen_int*pm_int + self.b[7]*gen_int*pm_var + \
-            self.b[8]*gen_var*pm_int + self.b[9]*gen_var*pm_var + self.b[10]*pm_int*pm_var + \
-            self.b[11]*gen_int*gen_var*pm_int + self.b[12]*gen_int*gen_var*pm_var + \
-            self.b[13]*gen_int*pm_int*pm_var + self.b[14]*gen_var*gen_var*pm_var + \
-            self.b[15]*gen_int*gen_var*pm_int*pm_var
+        lin_res = self.b[0] + self.b[1]*gen_int + self.b[2]*gen_var + self.b[3]*pm_int
+        nonlin_res = self.b[0] + self.b[1]*gen_int + self.b[2]*gen_var + self.b[3]*pm_int + \
+                     self.b[4]*gen_int*gen_var + self.b[5]*gen_int*pm_int + \
+                     self.b[6]*gen_var*pm_int + self.b[7]*gen_int*gen_var*pm_int
         
-        return [gen_int, gen_var, pm_int, pm_var, exp_res, lin_res, nonlin_res]
+        return [gen_int, gen_var, pm_int, exp_res, lin_res, nonlin_res]
         
 
