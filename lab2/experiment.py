@@ -39,7 +39,9 @@ class Experiment():
             matrix[i][6] = matrix[i][2] * matrix[i][3]
             matrix[i][7] = matrix[i][1] * matrix[i][2] * matrix[i][3]
 
-            '''matrix[i][5] = matrix[i][1] * matrix[i][2]
+            '''
+            В случае 4 факторов
+            matrix[i][5] = matrix[i][1] * matrix[i][2]
             matrix[i][6] = matrix[i][1] * matrix[i][3]
             matrix[i][7] = matrix[i][1] * matrix[i][4]
             matrix[i][8] = matrix[i][2] * matrix[i][3]
@@ -106,14 +108,14 @@ class Experiment():
         return realmin + (realmax - realmin) * (x - xmin) / (xmax - xmin)
 
     def param_convert(self, gen_int, gen_var, pm_int, pm_var):
-        a = 1/gen_int - math.sqrt(3/gen_var)
-        b = 1/gen_int + math.sqrt(3/gen_var)
+        a = 1 / gen_int - math.sqrt(3 / gen_var)
+        b = 1 / gen_int + math.sqrt(3 / gen_var)
         if a < 0:
             a = 1e-10
             b = 2/gen_int
 
-        weib_a = 1/pm_int
-        weib_lamb = 1/pm_var
+        weib_a = 1 / pm_int
+        weib_lamb = 1 / pm_var
         return a, b, weib_a, weib_lamb
 
 

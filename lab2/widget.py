@@ -65,11 +65,14 @@ class MainWindow(QWidget):
         ui = self.ui
 
         lin_regr = ("y = %.3f + %.3fx1 + %.3fx2 + %.3fx3" % \
-                               (regr[0], regr[1], regr[2], regr[3]))
+                        (regr[0], regr[1], regr[2], regr[3]))
         
         nonlin_regr = ("y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx1x2 + %.3fx1x3 + %.3fx2x3 + %.3fx1x2x3" % \
                         (regr[0], regr[1], regr[2], regr[3], regr[4], regr[5], regr[6], regr[7]))
 
+        lin_regr = lin_regr.replace("+ -", "- ")
+        nonlin_regr = nonlin_regr.replace("+ -", "- ")
+        
         ui.line_edit_lin_res.setText(str(lin_regr))
         ui.line_edit_nonlin_res.setText(str(nonlin_regr))
 
