@@ -14,9 +14,7 @@ class Experiment():
         self.max_gen_var = gen[3]
 
         self.min_pm_int = pm[0]
-        self.max_pm_int = pm[1]
-        self.min_pm_var = pm[2]
-        self.max_pm_var = pm[3]       
+        self.max_pm_int = pm[1]     
 
         self.time = time
         self.b = []
@@ -107,7 +105,7 @@ class Experiment():
     def scale_factor(self, x, realmin, realmax, xmin=-1, xmax=1):
         return realmin + (realmax - realmin) * (x - xmin) / (xmax - xmin)
 
-    def param_convert(self, gen_int, gen_var, pm_int, pm_var):
+    def param_convert(self, gen_int, gen_var, pm_int):
         a = 1 / gen_int - math.sqrt(3 / gen_var)
         b = 1 / gen_int + math.sqrt(3 / gen_var)
         if a < 0:
@@ -115,8 +113,7 @@ class Experiment():
             b = 2/gen_int
 
         weib_a = 1 / pm_int
-        weib_lamb = 1 / pm_var
-        return a, b, weib_a, weib_lamb
+        return a, b, weib_a
 
 
     def calculate(self):
@@ -128,13 +125,12 @@ class Experiment():
             gen_int = self.scale_factor(exp[1], self.min_gen_int, self.max_gen_int)
             gen_var = self.scale_factor(exp[2], self.min_gen_var, self.max_gen_var)
             pm_int = self.scale_factor(exp[3], self.min_pm_int, self.max_pm_int)
-            pm_var = self.scale_factor(exp[4], self.min_pm_var, self.max_pm_var)
 
-            a, b, weib_a, weib_lamb = self.param_convert(gen_int, gen_var, pm_int, pm_var)
+            a, b, weib_a = self.param_convert(gen_int, gen_var, pm_int)
 
             exp_res = 0
             for i in range(MOD_NUMBER):
-                model = Modeller(a, b, weib_a, weib_lamb, 1/pm_int) 
+                model = Modeller(a, b, weib_a, 1/pm_int) 
                 ro, avg_wait_time = model.event_based_modelling(self.time)
                 exp_res += avg_wait_time
             exp_res /= MOD_NUMBER
@@ -152,8 +148,8 @@ class Experiment():
             new_gen_var = self.scale_factor(gen_var, self.min_gen_var, self.max_gen_var)
             new_pm_int = self.scale_factor(pm_int, self.min_pm_int, self.max_pm_int)
 
-            a, b, weib_a, weib_lamb = self.param_convert(1, new_gen_int, new_gen_var, new_pm_int)
-            model = Modeller(a, b, weib_a, weib_lamb, pm_int) 
+            a, b, weib_a = self.param_convert(1, new_gen_int, new_gen_var, new_pm_int)
+            model = Modeller(a, b, weib_a, pm_int) 
             ro, avg_wait_time = model.event_based_modelling(self.time)
             exp_res += avg_wait_time
                 

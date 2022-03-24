@@ -42,8 +42,8 @@ class Exponential:
         self._lamb = lamb
 
     def generate(self):
-        cur_time = nr.exponential(1/self.lambda_param)
+        cur_time = nr.exponential(1/self._lamb)
         while cur_time < 0:
-            cur_time = nr.exponential(1/self.lambda_param)
+            cur_time = nr.exponential(1/self._lamb)
 
         return cur_time

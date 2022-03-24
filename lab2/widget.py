@@ -35,11 +35,10 @@ class MainWindow(QWidget):
 
             min_pm_int = float(ui.line_edit_min_pm_int.text())
             max_pm_int = float(ui.line_edit_max_pm_int.text())
-            min_pm_var = float(ui.line_edit_min_pm_var.text())
-            max_pm_var = float(ui.line_edit_max_pm_var.text())
-            pm = [min_pm_int, max_pm_int, min_pm_var, max_pm_var]
+            pm = [min_pm_int, max_pm_int]
+
             if min_gen_int < 0 or max_gen_int < 0 or min_gen_var < 0 or max_gen_var < 0 or \
-                min_pm_int < 0 or max_pm_int < 0 or min_pm_var < 0 or max_pm_var < 0:
+                min_pm_int < 0 or max_pm_int < 0:
                 raise ValueError('Интенсивности и дисперсии интенсивностей должны быть > 0')
 
             # Input params
@@ -72,7 +71,7 @@ class MainWindow(QWidget):
 
         lin_regr = lin_regr.replace("+ -", "- ")
         nonlin_regr = nonlin_regr.replace("+ -", "- ")
-        
+
         ui.line_edit_lin_res.setText(str(lin_regr))
         ui.line_edit_nonlin_res.setText(str(nonlin_regr))
 

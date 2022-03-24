@@ -1,13 +1,14 @@
-from .distribution import Uniform, Weibull, Normal
+from .distribution import Uniform, Weibull, Normal, Exponential
 from .generator import Generator
 from .processor import Processor
 
 
 class Modeller:
-    def __init__(self, uniform_a, uniform_b, weibull_a, weibull_lamb, m):
+    def __init__(self, uniform_a, uniform_b, exp_lamb, m):
         self._generator = Generator(Uniform(uniform_a, uniform_b))
         # self._processor = Processor(Weibull(weibull_a, weibull_lamb, m))
-        self._processor = Processor(Normal(weibull_a, weibull_lamb))
+        # self._processor = Processor(Normal(weibull_a, weibull_lamb))
+        self._processor = Processor(Exponential(1/exp_lamb))
         self._generator.add_receiver(self._processor)
 
     def event_based_modelling(self, end_time):

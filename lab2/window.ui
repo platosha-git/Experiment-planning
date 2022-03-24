@@ -188,7 +188,7 @@
      <x>440</x>
      <y>10</y>
      <width>411</width>
-     <height>181</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="font">
@@ -206,49 +206,10 @@
       <x>10</x>
       <y>30</y>
       <width>391</width>
-      <height>144</height>
+      <height>71</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_b_4">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string notr="true">Максимальная дисперсия интенсивность:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_a_3">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string notr="true">Минимальная дисперсия интенсивности:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="line_edit_min_pm_var">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>0.1</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="line_edit_max_pm_int">
        <property name="font">
@@ -259,6 +220,19 @@
        </property>
        <property name="text">
         <string>4</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_a_4">
+       <property name="font">
+        <font>
+         <family>Ubuntu</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string notr="true">Минимальная интенсивность:</string>
        </property>
       </widget>
      </item>
@@ -275,19 +249,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="line_edit_max_pm_var">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>0.4</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_b_3">
        <property name="font">
@@ -298,19 +259,6 @@
        </property>
        <property name="text">
         <string notr="true">Максимальная интенсивность:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_a_4">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string notr="true">Минимальная интенсивность:</string>
        </property>
       </widget>
      </item>
