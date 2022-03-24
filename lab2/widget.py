@@ -75,7 +75,7 @@ class MainWindow(QWidget):
         ui.line_edit_lin_res.setText(str(lin_regr))
         ui.line_edit_nonlin_res.setText(str(nonlin_regr))
 
-        print(table[0])
+        #print(table[0])
         for i in range(len(table)):            
             ui.table.setRowCount(ui.Table_position + 1)
             table_len = len(table[i])

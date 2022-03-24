@@ -110,10 +110,10 @@ class Experiment():
         b = 1 / gen_int + math.sqrt(3 / gen_var)
         if a < 0:
             a = 1e-10
-            b = 2/gen_int
+            b = 2 / gen_int
 
-        weib_a = 1 / pm_int
-        return a, b, weib_a
+        exp_lamb = 1 / pm_int
+        return a, b, exp_lamb
 
 
     def calculate(self):
@@ -126,11 +126,11 @@ class Experiment():
             gen_var = self.scale_factor(exp[2], self.min_gen_var, self.max_gen_var)
             pm_int = self.scale_factor(exp[3], self.min_pm_int, self.max_pm_int)
 
-            a, b, weib_a = self.param_convert(gen_int, gen_var, pm_int)
+            a, b, exp_lamb = self.param_convert(gen_int, gen_var, pm_int)
 
             exp_res = 0
             for i in range(MOD_NUMBER):
-                model = Modeller(a, b, weib_a) 
+                model = Modeller(a, b, exp_lamb) 
                 ro, avg_wait_time = model.event_based_modelling(self.time)
                 exp_res += avg_wait_time
             exp_res /= MOD_NUMBER
@@ -148,8 +148,8 @@ class Experiment():
             new_gen_var = self.scale_factor(gen_var, self.min_gen_var, self.max_gen_var)
             new_pm_int = self.scale_factor(pm_int, self.min_pm_int, self.max_pm_int)
 
-            a, b, weib_a = self.param_convert(new_gen_int, new_gen_var, new_pm_int)
-            model = Modeller(a, b, weib_a) 
+            a, b, exp_lamb = self.param_convert(new_gen_int, new_gen_var, new_pm_int)
+            model = Modeller(a, b, exp_lamb) 
             ro, avg_wait_time = model.event_based_modelling(self.time)
             exp_res += avg_wait_time
                 

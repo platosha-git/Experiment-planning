@@ -84,7 +84,7 @@
         </font>
        </property>
        <property name="text">
-        <string>2.5</string>
+        <string>2</string>
        </property>
       </widget>
      </item>
@@ -636,7 +636,7 @@
         </font>
        </property>
        <property name="text">
-        <string>-1</string>
+        <string>1</string>
        </property>
       </widget>
      </item>
