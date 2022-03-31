@@ -1441,7 +1441,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Helvetica</family>
+       <family>Ubuntu</family>
+       <pointsize>11</pointsize>
       </font>
      </property>
      <property name="toolTip">
@@ -1456,8 +1457,11 @@
      <attribute name="horizontalHeaderVisible">
       <bool>false</bool>
      </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>57</number>
+     </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>90</number>
+      <number>80</number>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
@@ -1828,7 +1832,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Helvetica</family>
+       <family>Ubuntu</family>
+       <pointsize>11</pointsize>
       </font>
      </property>
      <property name="toolTip">
@@ -1844,7 +1849,7 @@
       <bool>false</bool>
      </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>90</number>
+      <number>80</number>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
