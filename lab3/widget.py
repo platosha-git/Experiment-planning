@@ -4,7 +4,6 @@ from PyQt5 import uic
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QTableWidgetItem
 from experiment import Experiment
-from partial_plan_table_widget import PartialPlanTableWidget
 from numpy import random as nr
 from itertools import *
 
@@ -21,7 +20,6 @@ class MainWindow(QWidget):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.ui = uic.loadUi("window.ui", self)
-        self.table_partial_widget = PartialPlanTableWidget()
         self.experiment = None
         self.plan_table_full = None
         self.plan_table_partial = None
@@ -147,92 +145,72 @@ class MainWindow(QWidget):
         ui.line_edit_lin_regr_partial.setText(lin_regr_partial)
         ui.line_edit_nonlin_regr_partial.setText(nonlin_regr_partial)
 
-    @pyqtSlot(name='on_check_full_button_clicked')
-    def parse_check_full_parameters(self):
+
+    @pyqtSlot(name='on_check_button_clicked')
+    def parse_check_parameters(self):
         try:
             ui = self.ui
 
             if self.experiment == None:
                 raise ValueError('Сначала необходимо рассчитать коэффициенты регрессии')
 
-            gen_int_1 = float(ui.line_edit_x1_full.text())
-            gen_int_2 = float(ui.line_edit_x2_full.text())
-            pm_int_1 = float(ui.line_edit_x3_full.text())
-            pm_var_1 = float(ui.line_edit_x4_full.text())
-            pm_int_2 = float(ui.line_edit_x5_full.text())
-            pm_var_2 = float(ui.line_edit_x6_full.text())
+            gen_int_1 = float(ui.line_edit_x1.text())
+            gen_int_2 = float(ui.line_edit_x2.text())
+            gen_var_1 = float(ui.line_edit_x3.text())
+            gen_var_2 = float(ui.line_edit_x4.text())
+            pm_int_1 = float(ui.line_edit_x5.text())
+            pm_int_2 = float(ui.line_edit_x6.text())
 
-            if abs(gen_int_1) > 1 or abs(gen_int_2) > 1 or \
-                abs(pm_int_1) > 1 or abs(pm_var_1) > 1 or abs(pm_int_2) > 1 or abs(pm_var_2) > 1:
+            if abs(gen_int_1) > 1 or abs(gen_int_2) > 1 or abs(gen_var_1) > 1 or abs(gen_var_2) > 1 or \
+                abs(pm_int_1) > 1 or abs(pm_int_2) > 1:
                 raise ValueError('Координаты точки должны находится в диапазоне [-1; 1]')
 
-            # Input params
+
             time = int(ui.line_edit_time.text())
             if time <= 0:
                 raise ValueError('Необходимо время моделирования > 0')
 
-            point = [gen_int_1, gen_int_2, pm_int_1, pm_var_1, pm_int_2, pm_var_2]
-            res = self.experiment.check(point, CHECK_FULL)
-
-            flag = False
-            for i in range(len(res) - 5):
-                if res[i] != 0 and i != 0:
-                    flag = True
-
-            if flag:
-                res[-1] = res[-1] / 100
-                res[-2] /= 10
-            else:
-                res[-1] *= 2
-                res[-2] *= 2
-
-            res[-3] = abs(res[-5] - res[-1])
-            res[-4] = res[-5] - res[-2]
-
-            self.ui.full_table_position = self.show_check_result(res, ui.table_full, ui.full_table_position)
+            point = [gen_int_1, gen_int_2, gen_var_1, gen_var_2, pm_int_1, pm_int_2]
+            self.check_full(point);
+            self.check_partial(point);
 
         except ValueError as e:
             QMessageBox.warning(self, 'Ошибка', 'Ошибка входных данных!\n' + str(e))
         except Exception as e:
             QMessageBox.critical(self, 'Ошибка', str(e))
 
-    @pyqtSlot(name='on_check_partial_button_clicked')
-    def parse_check_partial_parameters(self):
-        try:
-            ui = self.ui
 
-            if self.experiment == None:
-                raise ValueError('Сначала необходимо рассчитать коэффициенты регрессии')
+    def check_full(self, point):
+        ui = self.ui
+        res = self.experiment.check(point, CHECK_FULL)
 
-            gen_int_1 = float(ui.line_edit_x1_partial.text())
-            gen_int_2 = float(ui.line_edit_x2_partial.text())
-            pm_int_1 = float(ui.line_edit_x3_partial.text())
-            pm_var_1 = float(ui.line_edit_x4_partial.text())
-            pm_int_2 = float(ui.line_edit_x5_partial.text())
-            pm_var_2 = float(ui.line_edit_x6_partial.text())
+        flag = False
+        for i in range(len(res) - 5):
+            if res[i] != 0 and i != 0:
+                flag = True
 
-            if abs(gen_int_1) > 1 or abs(gen_int_2) > 1 or \
-                abs(pm_int_1) > 1 or abs(pm_var_1) > 1 or abs(pm_int_2) > 1 or abs(pm_var_2) > 1:
-                raise ValueError('Координаты точки должны находится в диапазоне [-1; 1]')
+        if flag:
+            res[-1] = res[-1] / 100
+            res[-2] /= 10
+        else:
+            res[-1] *= 2
+            res[-2] *= 2
 
-            # Input params
-            time = int(ui.line_edit_time.text())
-            if time <= 0:
-                raise ValueError('Необходимо время моделирования > 0')
+        res[-3] = abs(res[-5] - res[-1])
+        res[-4] = res[-5] - res[-2]
 
-            point = [gen_int_1, gen_int_2, pm_int_1, pm_var_1, pm_int_2, pm_var_2]
-            res = self.experiment.check(point, CHECK_PARTIAL)
+        self.ui.full_table_position = self.show_check_result(res, ui.table_full, ui.full_table_position)
 
-            self.ui.partial_table_position = self.show_check_result(res, ui.table_partial, ui.partial_table_position)
-        except ValueError as e:
-            QMessageBox.warning(self, 'Ошибка', 'Ошибка входных данных!\n' + str(e))
-        except Exception as e:
-            QMessageBox.critical(self, 'Ошибка', str(e))
+
+    def check_partial(self, point):
+        ui = self.ui
+        res = self.experiment.check(point, CHECK_PARTIAL)
+        self.ui.partial_table_position = self.show_check_result(res, ui.table_partial, ui.partial_table_position)
+
 
     def show_check_result(self, res, table, table_position):
         ui = self.ui
 
-        print(res)
         table.setRowCount(table_position + 1)
         table_len = len(res)
         for j in range(table_len + 1):

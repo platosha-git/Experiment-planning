@@ -294,11 +294,10 @@ class Experiment():
         exp_y = 0
         for i in range(MOD_NUMBER):
             gen_int, gen_var, pm_int, pm_var = self.point_scaling(point)
-            a, b, weib_a, weib_lamb = self.params_convert(gen_int, gen_var, pm_int, pm_var)
-            print("check distribution params", a, b, weib_a, weib_lamb)
+            a, b, lamb = self.params_convert(gen_int, gen_var, pm_int, pm_var)
             # model = Modeller(a1, b1, a2, b2, weib_a, weib_lamb, 1/pm_int) 
             # ro, avg_wait_time = model.event_based_modelling(self.time)
-            avg_wait_time = modelling(a, b, weib_a, weib_lamb, self.time)
+            avg_wait_time = modelling(a, b, lamb, self.time)
             exp_y += avg_wait_time
          
         exp_y /= MOD_NUMBER
