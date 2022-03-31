@@ -36,7 +36,7 @@ def create_graph():
     mas = [0]
     res = [0]
     while i < 1:
-        print(i)
+        #print(i)
         mas.append(i)
 
         # экспоненциальный шаг
@@ -115,5 +115,3 @@ if __name__ == "__main__":
     print(f"Теор. обработанных заявок: {maxTimeModulation * min(l_coming, mu_handling):.2f} ({maxTimeModulation:.2f} min)")
 
     create_graph()
-
-
