@@ -15,7 +15,7 @@ PARTIAL_MATR_SIZE = 2**(FACTORS_NUMBER - REPLICA)
 FULL_COEF_NUMBER = 22
 PARTIAL_COEF_NUMBER = 16
 
-MOD_NUMBER = 1 # Лучше брать 10
+MOD_NUMBER = 1
 
 CHECK_FULL = 1
 CHECK_PARTIAL = 2
@@ -41,9 +41,9 @@ class Experiment():
             x = []
             for j in range(1, FACTORS_NUMBER + 1):
                 if i // (2 ** (j - 1)) % 2 == 1:
-                    matrix[i][j] = 1
-                else:
                     matrix[i][j] = -1
+                else:
+                    matrix[i][j] = 1
                 x.append(matrix[i][j])
 
             matrix[i][0] = 1
@@ -66,31 +66,22 @@ class Experiment():
             matrix[i][0] = 1
             for j in range(1, FACTORS_NUMBER - 1):
                 if i // (2 ** (j - 1)) % 2 == 1:
-                    matrix[i][j] = 1
-                else:
                     matrix[i][j] = -1
+                else:
+                    matrix[i][j] = 1
 
             matrix[i][5] = matrix[i][2] * matrix[i][3] * matrix[i][4]
             matrix[i][6] = matrix[i][1] * matrix[i][2] * matrix[i][3] * matrix[i][4]
 
-            # x1x2
-            matrix[i][7] = matrix[i][1] * matrix[i][2]
-            # x1x3
-            matrix[i][8] = matrix[i][1] * matrix[i][3]
-            # x1x4
-            matrix[i][9] = matrix[i][1] * matrix[i][4]
-            # x2x3
-            matrix[i][10] = matrix[i][2] * matrix[i][3]
-            # x2x4
-            matrix[i][11] = matrix[i][2] * matrix[i][4]
-            # x2x5
-            matrix[i][12] = matrix[i][2] * matrix[i][5]
-            # x2x6
-            matrix[i][13] = matrix[i][2] * matrix[i][6]
-            # x3x6
-            matrix[i][14] = matrix[i][3] * matrix[i][6]
-            # x4x6
-            matrix[i][15] = matrix[i][4] * matrix[i][6]
+            matrix[i][7] = matrix[i][1] * matrix[i][2]          # x1x2
+            matrix[i][8] = matrix[i][1] * matrix[i][3]          # x1x3
+            matrix[i][9] = matrix[i][1] * matrix[i][4]          # x1x4
+            matrix[i][10] = matrix[i][2] * matrix[i][3]         # x2x3
+            matrix[i][11] = matrix[i][2] * matrix[i][4]         # x2x4
+            matrix[i][12] = matrix[i][2] * matrix[i][5]         # x2x5
+            matrix[i][13] = matrix[i][2] * matrix[i][6]         # x2x6
+            matrix[i][14] = matrix[i][3] * matrix[i][6]         # x3x6
+            matrix[i][15] = matrix[i][4] * matrix[i][6]         # x4x6
 
         return matrix
 
@@ -124,15 +115,15 @@ class Experiment():
         b_particial.append(b[4])
         b_particial.append(b[5])
         b_particial.append(b[6])
-        b_particial.append(b[7])  # x1x2
-        b_particial.append(b[8])  # x1x3
-        b_particial.append(b[9])  # x1x4
-        b_particial.append(b[10])  # x2x3
-        b_particial.append(b[11])  # x2x4
-        b_particial.append(b[12])  # x2x5
-        b_particial.append(b[13])  # x2x6
-        b_particial.append(b[14])  # x3x6
-        b_particial.append(b[15])  # x4x6
+        b_particial.append(b[7])    # x1x2
+        b_particial.append(b[8])    # x1x3
+        b_particial.append(b[9])    # x1x4
+        b_particial.append(b[10])   # x2x3
+        b_particial.append(b[11])   # x2x4
+        b_particial.append(b[12])   # x2x5
+        b_particial.append(b[13])   # x2x6
+        b_particial.append(b[14])   # x3x6
+        b_particial.append(b[15])   # x4x6
 
         return b_particial
 
@@ -170,22 +161,14 @@ class Experiment():
 
         ylin, ynlin = self.fill_y(plan, b[:int(np.log2(len(b))) + 1], b)
         self.fill_plan(plan, y, ylin, ynlin)
-        # ylin, ynlin = fill_y(custom_plan, b[:int(np.log2(len(b))) + 1], b)
-        # if len(custom_plan) > 0:
-        #     fill_plan(custom_plan, y, ylin, ynlin)
 
         return b
 
 
     def expand_partial_plan(self, plan, y):
         b = self.calc_b_partial(plan, y)
-        print("len b", len(plan), len(plan[0]), len(y), len(b))
-
         ylin, ynlin = self.fill_y(plan, b[:int(np.log2(len(b))) + 1], b)
         self.fill_plan(plan, y, ylin, ynlin)
-        # ylin, ynlin = fill_y(custom_plan, b[:int(np.log2(len(b))) + 1], b)
-        # if len(custom_plan) > 0:
-        #     fill_plan(custom_plan, y, ylin, ynlin)
 
         return b
 
@@ -196,20 +179,6 @@ class Experiment():
             a = 1e-10
             b = 2/intens
         return a, b
-
-    def convert_to_weibull_param(self, intens, var):
-        intens = 1/intens
-        var = 1/var
-        weib_a = (var/intens)**(-1.086)
-        weib_lamb = intens/(math.gamma(1 + 1/weib_a))
-        if weib_a < 0:
-            weib_a = 1e-10
-        if weib_lamb < 0:
-            weib_lamb = 1e-10
-        return weib_a, weib_lamb
-
-    def convert_to_normal_param(self, intens, var):
-        return 1/intens, 1/var
     
     def convert_to_exp_param(self, intens):
         return 1/intens
@@ -248,14 +217,12 @@ class Experiment():
         for exp in matr:
             gen_int, gen_var, pm_int, pm_var = self.point_scaling(exp[1:(FACTORS_NUMBER + 1)])
             a, b, lamb = self.params_convert(gen_int, gen_var, pm_int)
-            print("distribution params", a, b, lamb)
 
             exp_res = 0
             for i in range(MOD_NUMBER):
                 # model = Modeller(a[0], b[0], a[1], b[1], lamb[0], lamb[1], 1/pm_int)
                 # ro, avg_wait_time = model.event_based_modelling(self.time)
                 avg_wait_time = modelling(a, b, lamb, self.time)
-                print("avg_wait_time", avg_wait_time)
                 exp_res += avg_wait_time
             exp_res /= MOD_NUMBER
 
@@ -318,4 +285,3 @@ class Experiment():
         
         return res
         
-

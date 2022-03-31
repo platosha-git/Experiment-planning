@@ -227,7 +227,6 @@ class MainWindow(QWidget):
     def show_check_result(self, res, table, table_position):
         ui = self.ui
 
-        print(res)
         table.setRowCount(table_position + 1)
         table_len = len(res)
         for j in range(table_len + 1):
