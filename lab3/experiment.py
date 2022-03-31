@@ -1,4 +1,3 @@
-from queueing_system.modeller import Modeller
 from smo import modelling
 from prettytable import PrettyTable
 
@@ -180,7 +179,6 @@ class Experiment():
 
     def expand_partial_plan(self, plan, y):
         b = self.calc_b_partial(plan, y)
-        print("len b", len(plan), len(plan[0]), len(y), len(b))
 
         ylin, ynlin = self.fill_y(plan, b[:int(np.log2(len(b))) + 1], b)
         self.fill_plan(plan, y, ylin, ynlin)
@@ -251,14 +249,12 @@ class Experiment():
         for exp in matr:
             gen_int, gen_var, pm_int, pm_var = self.point_scaling(exp[1:(FACTORS_NUMBER + 1)])
             a, b, lamb = self.params_convert(gen_int, gen_var, pm_int, pm_var)
-            print("distribution params", a, b, lamb)
 
             exp_res = 0
             for i in range(MOD_NUMBER):
                 # model = Modeller(a1, b1, a2, b2, weib_a, weib_lamb, 1/pm_int)
                 # ro, avg_wait_time = model.event_based_modelling(self.time)
                 avg_wait_time = modelling(a, b, lamb, self.time)
-                print("avg_wait_time", avg_wait_time)
                 exp_res += avg_wait_time
             exp_res /= MOD_NUMBER
 
