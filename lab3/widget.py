@@ -4,7 +4,6 @@ from PyQt5 import uic
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QTableWidgetItem
 from experiment import Experiment
-from full_plan_table_widget import FullPlanTableWidget
 from partial_plan_table_widget import PartialPlanTableWidget
 from numpy import random as nr
 from itertools import *
@@ -22,7 +21,6 @@ class MainWindow(QWidget):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.ui = uic.loadUi("window.ui", self)
-        self.table_full_widget = FullPlanTableWidget()
         self.table_partial_widget = PartialPlanTableWidget()
         self.experiment = None
         self.plan_table_full = None
@@ -72,6 +70,8 @@ class MainWindow(QWidget):
             self.b_full, self.b_partial, self.plan_table_full, self.plan_table_partial = self.experiment.calculate()
 
             self.show_results()
+            self.show_table_full();
+            self.show_table_partial();
 
 
         except ValueError as e:
@@ -190,6 +190,7 @@ class MainWindow(QWidget):
             res[-4] = res[-5] - res[-2]
 
             self.ui.full_table_position = self.show_check_result(res, ui.table_full, ui.full_table_position)
+
         except ValueError as e:
             QMessageBox.warning(self, 'Ошибка', 'Ошибка входных данных!\n' + str(e))
         except Exception as e:
@@ -244,7 +245,7 @@ class MainWindow(QWidget):
         table_position += 1
         return table_position
 
-    @pyqtSlot(name='on_show_full_table_button_clicked')
+
     def show_table_full(self):
         ui = self.ui
 
@@ -252,7 +253,7 @@ class MainWindow(QWidget):
             if i < 64:
                 self.plan_table_full[i][-1] = 0
                 self.plan_table_full[i][-3] = self.plan_table_full[i][-5]
-        #self.table_full_widget.show(self.plan_table_full)
+
         ui.plan_table.setRowCount(1)
         Table_position = 1
 
@@ -268,14 +269,29 @@ class MainWindow(QWidget):
                     self.set_value(ui.plan_table, Table_position, j, '%.4f', self.plan_table_full[i][j - 1])
             Table_position += 1
 
-    @pyqtSlot(name='on_show_partial_table_button_clicked')
+
     def show_table_partial(self):
+        ui = self.ui
+
         for i in range(len(self.plan_table_partial)):
             if i < 64:
                 self.plan_table_partial[i][-1] /= 10
             self.plan_table_partial[i][-3] = self.plan_table_partial[i][-5] - self.plan_table_partial[i][-1]
 
-        self.table_partial_widget.show(self.plan_table_partial)
+        ui.plan_table_2.setRowCount(1)
+        Table_position = 1
+
+        for i in range(len(self.plan_table_partial)):            
+            ui.plan_table_2.setRowCount(Table_position + 1)
+            table_len = len(self.plan_table_partial[i])
+            for j in range(table_len + 1):
+                if j == 0:
+                    self.set_value(ui.plan_table_2, Table_position, 0, '%d', Table_position)
+                elif j < table_len - 4:
+                    self.set_value(ui.plan_table_2, Table_position, j, '%d', self.plan_table_partial[i][j - 1])
+                else:
+                    self.set_value(ui.plan_table_2, Table_position, j, '%.4f', self.plan_table_partial[i][j - 1])
+            Table_position += 1
 
 
 def qt_app():
