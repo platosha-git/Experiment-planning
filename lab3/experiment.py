@@ -1,4 +1,3 @@
-from queueing_system.modeller import Modeller
 from smo import modelling
 from prettytable import PrettyTable
 
@@ -25,11 +24,11 @@ class Experiment():
     def __init__(self, gen_1, gen_2, pm_1, pm_2, time):
         self.min_gen_int = [gen_1[0], gen_2[0]]
         self.max_gen_int = [gen_1[1], gen_2[1]]
+        self.min_gen_var = [gen_1[2], gen_2[3]]
+        self.max_gen_var = [gen_1[3], gen_2[3]]
 
         self.min_pm_int = [pm_1[0], pm_2[0]]
         self.max_pm_int = [pm_1[1], pm_2[1]]
-        self.min_pm_var = [pm_1[2], pm_2[2]]
-        self.max_pm_var = [pm_1[3], pm_2[3]]
 
         self.time = time
         self.full_b = []
@@ -215,17 +214,14 @@ class Experiment():
     def convert_to_exp_param(self, intens):
         return 1/intens
 
-    def params_convert(self, gen_int, gen_var, pm_int, pm_var):
-        a1 = self.convert_to_exp_param(gen_int[0])
-        a2 = self.convert_to_exp_param(gen_int[1])
+    def params_convert(self, gen_int, gen_var, pm_int):
+        a1, b1 = self.convert_to_unif_param(gen_int[0], gen_var[0])
+        a2, b2 = self.convert_to_unif_param(gen_int[1], gen_var[1])
 
-        # weib_a1, weib_lamb1 = self.convert_to_weibull_param(pm_int[0], pm_var[0])
-        # weib_a2, weib_lamb2 = self.convert_to_weibull_param(pm_int[1], pm_var[1])
-        
-        weib_a1, weib_lamb1 = self.convert_to_unif_param(pm_int[0], pm_var[0])
-        weib_a2, weib_lamb2 = self.convert_to_unif_param(pm_int[1], pm_var[1])
+        lamb1 = self.convert_to_exp_param(gen_int[0])
+        lamb2 = self.convert_to_exp_param(gen_int[1])
 
-        return [a1, a2], [], [weib_a1, weib_a2], [weib_lamb1, weib_lamb2]
+        return [a1, a2], [b1, b2], [lamb1, lamb2]
 
     def scale_factor(self, x, realmin, realmax, xmin=-1, xmax=1):
         return realmin + (realmax - realmin) * (x - xmin) / (xmax - xmin)
@@ -236,16 +232,14 @@ class Experiment():
         gen_int.append(self.scale_factor(x[1], self.min_gen_int[1], self.max_gen_int[1]))
 
         gen_var = []
-        # gen_var.append(self.scale_factor(x[1], self.min_gen_var[0], self.max_gen_var[0]))
-        # gen_var.append(self.scale_factor(x[3], self.min_gen_var[1], self.max_gen_var[1]))
+        gen_var.append(self.scale_factor(x[1], self.min_gen_var[0], self.max_gen_var[0]))
+        gen_var.append(self.scale_factor(x[3], self.min_gen_var[1], self.max_gen_var[1]))
 
         pm_int = []
         pm_int.append(self.scale_factor(x[2], self.min_pm_int[0], self.max_pm_int[0]))
         pm_int.append(self.scale_factor(x[4], self.min_pm_int[1], self.max_pm_int[1]))
 
         pm_var = []
-        pm_var.append(self.scale_factor(x[3], self.min_pm_var[0], self.max_pm_var[0]))
-        pm_var.append(self.scale_factor(x[5], self.min_pm_var[1], self.max_pm_var[1]))
 
         return gen_int, gen_var, pm_int, pm_var
 
@@ -253,14 +247,14 @@ class Experiment():
         y = []
         for exp in matr:
             gen_int, gen_var, pm_int, pm_var = self.point_scaling(exp[1:(FACTORS_NUMBER + 1)])
-            a, b, weib_a, weib_lamb = self.params_convert(gen_int, gen_var, pm_int, pm_var)
-            print("distribution params", a, b, weib_a, weib_lamb)
+            a, b, lamb = self.params_convert(gen_int, gen_var, pm_int)
+            print("distribution params", a, b, lamb)
 
             exp_res = 0
             for i in range(MOD_NUMBER):
-                # model = Modeller(a1, b1, a2, b2, weib_a, weib_lamb, 1/pm_int)
+                # model = Modeller(a[0], b[0], a[1], b[1], lamb[0], lamb[1], 1/pm_int)
                 # ro, avg_wait_time = model.event_based_modelling(self.time)
-                avg_wait_time = modelling(a, b, weib_a, weib_lamb, self.time)
+                avg_wait_time = modelling(a, b, lamb, self.time)
                 print("avg_wait_time", avg_wait_time)
                 exp_res += avg_wait_time
             exp_res /= MOD_NUMBER

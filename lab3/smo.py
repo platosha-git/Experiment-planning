@@ -171,11 +171,11 @@ class Modeller:
         result = avg_time_in_smo
         return result
 
-def modelling(gen_int, gen_var, pm_int, pm_var, time_modelling):
-    generator1 = RequestGenerator(ExponentGenerator(gen_int[0]), '1')
-    generator2 = RequestGenerator(ExponentGenerator(gen_int[1]), '2')
-    OA_type1 = UniformGenerator(pm_int[0], pm_var[0])
-    OA_type2 = UniformGenerator(pm_int[1], pm_var[1])
+def modelling(gen_int, gen_var, pm_int, time_modelling):
+    generator1 = RequestGenerator(UniformGenerator(gen_int[0], gen_var[0]), '1')
+    generator2 = RequestGenerator(UniformGenerator(gen_int[1], gen_var[1]), '2')
+    OA_type1 = ExponentGenerator(pm_int[0])
+    OA_type2 = ExponentGenerator(pm_int[1])
     processor = RequestProcessor(OA_type1, OA_type2)
     model = Modeller(generator1, generator2, processor)
     result_tb = model.time_based_modelling(STEP, time_modelling)

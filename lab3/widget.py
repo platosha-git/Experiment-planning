@@ -40,35 +40,30 @@ class MainWindow(QWidget):
 
             min_gen_int_1 = float(ui.line_edit_min_gen_int.text())
             max_gen_int_1 = float(ui.line_edit_max_gen_int.text())
-            # min_gen_var_1 = float(ui.line_edit_min_gen_var.text())
-            # max_gen_var_1 = float(ui.line_edit_max_gen_var.text())
-            gen_1 = [min_gen_int_1, max_gen_int_1]
+            min_gen_var_1 = float(ui.line_edit_min_gen_var.text())
+            max_gen_var_1 = float(ui.line_edit_max_gen_var.text())
+            gen_1 = [min_gen_int_1, max_gen_int_1, min_gen_var_1, max_gen_var_1]
 
             min_gen_int_2 = float(ui.line_edit_min_gen_int_2.text())
             max_gen_int_2 = float(ui.line_edit_max_gen_int_2.text())
-            # min_gen_var_2 = float(ui.line_edit_min_gen_var_2.text())
-            # max_gen_var_2 = float(ui.line_edit_max_gen_var_2.text())
-            gen_2 = [min_gen_int_2, max_gen_int_2]
+            min_gen_var_2 = float(ui.line_edit_min_gen_var_2.text())
+            max_gen_var_2 = float(ui.line_edit_max_gen_var_2.text())
+            gen_2 = [min_gen_int_2, max_gen_int_2, min_gen_var_2, max_gen_var_2]
 
             min_pm_int_1 = float(ui.line_edit_min_pm_int_1.text())
             max_pm_int_1 = float(ui.line_edit_max_pm_int_1.text())
-            min_pm_var_1 = float(ui.line_edit_min_pm_var_1.text())
-            max_pm_var_1 = float(ui.line_edit_max_pm_var_1.text())
-            pm_1 = [min_pm_int_1, max_pm_int_1, min_pm_var_1, max_pm_var_1]
+            pm_1 = [min_pm_int_1, max_pm_int_1]
 
             min_pm_int_2 = float(ui.line_edit_min_pm_int_2.text())
             max_pm_int_2 = float(ui.line_edit_max_pm_int_2.text())
-            min_pm_var_2 = float(ui.line_edit_min_pm_var_2.text())
-            max_pm_var_2 = float(ui.line_edit_max_pm_var_2.text())
-            pm_2 = [min_pm_int_2, max_pm_int_2, min_pm_var_2, max_pm_var_2]
+            pm_2 = [min_pm_int_2, max_pm_int_2]
 
-            if gen_1[0] < 0 or gen_1[1] < 0 or \
-                gen_2[0] < 0 or gen_2[1] < 0 or \
-                pm_1[0] < 0 or pm_1[1] < 0 or pm_1[2] < 0 or pm_1[3] < 0 or \
-                pm_2[0] < 0 or pm_2[1] < 0 or pm_2[2] < 0 or pm_2[3] < 0:
+            if gen_1[0] < 0 or gen_1[1] < 0 or gen_1[2] < 0 or gen_1[3] < 0 or \
+                gen_2[0] < 0 or gen_2[1] < 0 or gen_2[2] < 0 or gen_2[3] < 0 or \
+                pm_1[0] < 0 or pm_1[1] < 0 or \
+                pm_2[0] < 0 or pm_2[1] < 0:
                 raise ValueError('Интенсивности и дисперсии интенсивностей должны быть > 0')
 
-            # Input params
             time = int(ui.line_edit_time.text())
             if time <= 0:
                 raise ValueError('Необходимо время моделирования > 0')
@@ -80,8 +75,6 @@ class MainWindow(QWidget):
 
         except ValueError as e:
             QMessageBox.warning(self, 'Ошибка', 'Ошибка входных данных!\n' + str(e))
-        # except Exception as e:
-        #     QMessageBox.critical(self, 'Ошибка', str(e))
 
     def set_value(self, table, line, column, format, value):
         item = QTableWidgetItem(format % value)

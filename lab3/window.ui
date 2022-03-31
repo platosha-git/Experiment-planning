@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1440</width>
+    <width>1831</width>
     <height>751</height>
    </rect>
   </property>
@@ -28,7 +28,7 @@
   <widget class="QPushButton" name="calc_button">
    <property name="geometry">
     <rect>
-     <x>1120</x>
+     <x>1510</x>
      <y>60</y>
      <width>231</width>
      <height>31</height>
@@ -49,8 +49,8 @@
     <rect>
      <x>10</x>
      <y>40</y>
-     <width>211</width>
-     <height>91</height>
+     <width>251</width>
+     <height>111</height>
     </rect>
    </property>
    <property name="font">
@@ -67,8 +67,8 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>191</width>
-      <height>56</height>
+      <width>203</width>
+      <height>78</height>
      </rect>
     </property>
     <property name="font">
@@ -131,11 +131,49 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLineEdit" name="line_edit_min_gen_var">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>30</y>
+      <width>23</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Helvetica</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0.1</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_edit_max_gen_var">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>70</y>
+      <width>23</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Helvetica</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0.4</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
-     <x>830</x>
+     <x>1220</x>
      <y>30</y>
      <width>251</width>
      <height>71</height>
@@ -155,7 +193,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>231</width>
+      <width>234</width>
       <height>41</height>
      </rect>
     </property>
@@ -197,7 +235,7 @@
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>610</x>
      <y>40</y>
      <width>301</width>
      <height>181</height>
@@ -217,8 +255,8 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>281</width>
-      <height>141</height>
+      <width>301</width>
+      <height>160</height>
      </rect>
     </property>
     <property name="font">
@@ -458,7 +496,7 @@
   <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
-     <x>830</x>
+     <x>1220</x>
      <y>100</y>
      <width>301</width>
      <height>121</height>
@@ -479,7 +517,7 @@
       <x>10</x>
       <y>30</y>
       <width>291</width>
-      <height>88</height>
+      <height>119</height>
      </rect>
     </property>
     <property name="font">
@@ -650,7 +688,7 @@
   <widget class="QPushButton" name="check_full_button">
    <property name="geometry">
     <rect>
-     <x>880</x>
+     <x>1270</x>
      <y>230</y>
      <width>231</width>
      <height>31</height>
@@ -670,9 +708,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>130</y>
-     <width>211</width>
-     <height>101</height>
+     <y>150</y>
+     <width>271</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="font">
@@ -689,8 +727,8 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>191</width>
-      <height>56</height>
+      <width>203</width>
+      <height>78</height>
      </rect>
     </property>
     <property name="font">
@@ -753,11 +791,49 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLineEdit" name="line_edit_min_gen_var_2">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>30</y>
+      <width>23</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Helvetica</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0.1</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_edit_max_gen_var_2">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>70</y>
+      <width>23</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Helvetica</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0.4</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="label_a_10">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>420</x>
      <y>250</y>
      <width>471</width>
      <height>28</height>
@@ -776,7 +852,7 @@
   <widget class="QPushButton" name="check_partial_button">
    <property name="geometry">
     <rect>
-     <x>1180</x>
+     <x>1570</x>
      <y>230</y>
      <width>231</width>
      <height>31</height>
@@ -795,7 +871,7 @@
   <widget class="QGroupBox" name="groupBox_6">
    <property name="geometry">
     <rect>
-     <x>1130</x>
+     <x>1520</x>
      <y>100</y>
      <width>301</width>
      <height>121</height>
@@ -816,7 +892,7 @@
       <x>10</x>
       <y>30</y>
       <width>291</width>
-      <height>91</height>
+      <height>119</height>
      </rect>
     </property>
     <property name="font">
@@ -1025,7 +1101,7 @@
   <widget class="QGroupBox" name="groupBox_7">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>910</x>
      <y>40</y>
      <width>301</width>
      <height>181</height>
@@ -1045,8 +1121,8 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>281</width>
-      <height>141</height>
+      <width>301</width>
+      <height>160</height>
      </rect>
     </property>
     <property name="font">
