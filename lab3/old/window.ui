@@ -360,8 +360,8 @@
   <widget class="QLabel" name="label_a_10">
    <property name="geometry">
     <rect>
-     <x>810</x>
-     <y>60</y>
+     <x>10</x>
+     <y>660</y>
      <width>471</width>
      <height>28</height>
     </rect>
@@ -590,8 +590,8 @@
   <widget class="QPushButton" name="show_full_table_button">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>540</y>
+     <x>170</x>
+     <y>870</y>
      <width>231</width>
      <height>31</height>
     </rect>
@@ -609,8 +609,8 @@
   <widget class="QPushButton" name="show_partial_table_button">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>540</y>
+     <x>590</x>
+     <y>860</y>
      <width>231</width>
      <height>31</height>
     </rect>
@@ -628,8 +628,8 @@
   <widget class="QTableWidget" name="table_full">
    <property name="geometry">
     <rect>
-     <x>810</x>
-     <y>100</y>
+     <x>10</x>
+     <y>700</y>
      <width>1351</width>
      <height>61</height>
     </rect>
@@ -1010,8 +1010,8 @@
   <widget class="QTableWidget" name="table_partial">
    <property name="geometry">
     <rect>
-     <x>810</x>
-     <y>190</y>
+     <x>10</x>
+     <y>790</y>
      <width>1351</width>
      <height>61</height>
     </rect>
@@ -1323,8 +1323,8 @@
   <widget class="QLabel" name="label_a_11">
    <property name="geometry">
     <rect>
-     <x>810</x>
-     <y>170</y>
+     <x>10</x>
+     <y>770</y>
      <width>471</width>
      <height>28</height>
     </rect>
@@ -1843,8 +1843,8 @@
   <widget class="QTableWidget" name="plan_table">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>580</y>
+     <x>480</x>
+     <y>550</y>
      <width>1419</width>
      <height>598</height>
     </rect>

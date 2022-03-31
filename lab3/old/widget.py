@@ -64,7 +64,6 @@ class MainWindow(QWidget):
                 pm_2[0] < 0 or pm_2[1] < 0:
                 raise ValueError('Интенсивности и дисперсии интенсивностей должны быть > 0')
 
-            # Input params
             time = int(ui.line_edit_time.text())
             if time <= 0:
                 raise ValueError('Необходимо время моделирования > 0')
@@ -76,8 +75,6 @@ class MainWindow(QWidget):
 
         except ValueError as e:
             QMessageBox.warning(self, 'Ошибка', 'Ошибка входных данных!\n' + str(e))
-        # except Exception as e:
-        #     QMessageBox.critical(self, 'Ошибка', str(e))
 
     def set_value(self, table, line, column, format, value):
         item = QTableWidgetItem(format % value)
@@ -93,7 +90,7 @@ class MainWindow(QWidget):
         pos = 1
         for i in range(1, factors_number + 1):
             for comb in combinations(x, i):
-                cur_str = "(%.3f)"
+                cur_str = "%.3f"
                 if regr[pos] < 0:
                     cur_str = " - " + cur_str
                     regr[pos] = abs(regr[pos])
@@ -132,19 +129,25 @@ class MainWindow(QWidget):
         lin_regr_str_full, nonlin_regr_str_full = self.get_regr_string(self.b_full, 6)
         # lin_regr_str_partial, nonlin_regr_str_partial = self.get_regr_string(self.b_partial, 2)
 
-        ui.line_edit_lin_regr_full.setText(str(lin_regr_str_full))
-        ui.line_edit_nonlin_regr_full.setText(str(nonlin_regr_str_full))
+        ui.line_edit_lin_regr_full.setText(lin_regr_str_full)
+        ui.line_edit_nonlin_regr_full.setText(nonlin_regr_str_full)
         # ui.line_edit_lin_regr_partial.setText(str(lin_regr_str_partial))
         # ui.line_edit_nonlin_regr_partial.setText(str(nonlin_regr_str_partial))
+
         b_partial = self.b_partial
-        ui.line_edit_lin_regr_partial.setText(
-            "y = %.3f + (%.3f)x1 + (%.3f)x2 + (-%.3f)x3 + (-%.3f)x4 + (%.3f)x5 + (%.3f)x6" % \
-            (b_partial[0], abs(b_partial[1]), abs(b_partial[2]), abs(b_partial[3]), abs(b_partial[5]), b_partial[4], b_partial[6])
-        )
-        ui.line_edit_nonlin_regr_partial.setText(
-                    "y = %.3f + (%.3f)x1 + (%.3f)x2 + (-%.3f)x3 + (-%.3f)x4 + (%.3f)x5 + (%.3f)x6 + (%.3f)x1x2 + (%.3f)x1x3 + (%.3f)x1x4 + (%.3f)x2x3 + (%.3f)x2x4 + (%.3f)x2x5 + (%.3f)x2x6 + (%.3f)x3x6 + (%.3f)x4x6" % \
-                    (b_partial[0], abs(b_partial[1]), abs(b_partial[2]), abs(b_partial[3]), abs(b_partial[5]), b_partial[4], b_partial[6], b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
-        )
+
+        lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 - %.3fx3 - %.3fx4 + %.3fx5 + %.3fx6" % \
+                                (b_partial[0], abs(b_partial[1]), abs(b_partial[2]), abs(b_partial[3]), abs(b_partial[5]), b_partial[4], b_partial[6])
+
+        nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 - %.3fx3 - %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+                                (b_partial[0], abs(b_partial[1]), abs(b_partial[2]), abs(b_partial[3]), abs(b_partial[5]), b_partial[4], b_partial[6], 
+                                 b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
+
+        lin_regr_partial = lin_regr_partial.replace("+ -", "- ")
+        nonlin_regr_partial = nonlin_regr_partial.replace("+ -", "- ")
+
+        ui.line_edit_lin_regr_partial.setText(lin_regr_partial)
+        ui.line_edit_nonlin_regr_partial.setText(nonlin_regr_partial)
 
     @pyqtSlot(name='on_check_full_button_clicked')
     def parse_check_full_parameters(self):
@@ -230,7 +233,6 @@ class MainWindow(QWidget):
     def show_check_result(self, res, table, table_position):
         ui = self.ui
 
-        print(res)
         table.setRowCount(table_position + 1)
         table_len = len(res)
         for j in range(table_len + 1):
@@ -245,11 +247,28 @@ class MainWindow(QWidget):
 
     @pyqtSlot(name='on_show_full_table_button_clicked')
     def show_table_full(self):
+        ui = self.ui
+
         for i in range(len(self.plan_table_full)):
             if i < 64:
                 self.plan_table_full[i][-1] = 0
                 self.plan_table_full[i][-3] = self.plan_table_full[i][-5]
-        self.table_full_widget.show(self.plan_table_full)
+
+        ui.plan_table.setRowCount(1)
+        Table_position = 1
+
+        for i in range(len(self.plan_table_full)):            
+            ui.plan_table.setRowCount(Table_position + 1)
+            table_len = len(self.plan_table_full[i])
+            for j in range(table_len + 1):
+                if j == 0:
+                    self.set_value(ui.plan_table, Table_position, 0, '%d', Table_position)
+                elif j < table_len - 4:
+                    self.set_value(ui.plan_table, Table_position, j, '%d', self.plan_table_full[i][j - 1])
+                else:
+                    self.set_value(ui.plan_table, Table_position, j, '%.4f', self.plan_table_full[i][j - 1])
+            Table_position += 1
+
 
     @pyqtSlot(name='on_show_partial_table_button_clicked')
     def show_table_partial(self):

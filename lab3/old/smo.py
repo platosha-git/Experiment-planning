@@ -154,16 +154,10 @@ class Modeller:
         num_reports_fact = sum(queue_size) / len(queue_size)
         k = num_reports_fact / num_reports_teor
 
-        # if p_teor >= 1 or p_teor <= 0 or k == 0:
-        #     k = 1
-
         if len(time_processed_request):
             mas_time_request_in_smo = []
             for i in range(len(time_processed_request)):
-                # print(time_processed_request[i] - time_generated_request[i])
                 mas_time_request_in_smo.append(time_processed_request[i] - time_generated_request[i])
-            # print(mas_time_request_in_smo)
-            # print(mas_time_request_in_smo)
             avg_time_in_smo = sum(mas_time_request_in_smo) / len(mas_time_request_in_smo)
         else:
             avg_time_in_smo = 0
