@@ -133,10 +133,10 @@ class MainWindow(QWidget):
 
         b_partial = self.b_partial
 
-        lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 - %.3fx3 - %.3fx4 + %.3fx5 + %.3fx6" % \
-            (b_partial[0], abs(b_partial[1]), abs(b_partial[2]), abs(b_partial[3]), abs(b_partial[5]), b_partial[4], b_partial[6])
-        nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 - %.3fx3 - %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
-            (b_partial[0], abs(b_partial[1]), abs(b_partial[2]), abs(b_partial[3]), abs(b_partial[5]), b_partial[4], b_partial[6], 
+        lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
+            (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[5], b_partial[4], b_partial[6])
+        nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+            (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[5], b_partial[4], b_partial[6], 
              b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
         
         lin_regr_partial = lin_regr_partial.replace("+ -", "- ")

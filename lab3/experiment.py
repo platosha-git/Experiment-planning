@@ -41,9 +41,9 @@ class Experiment():
             x = []
             for j in range(1, FACTORS_NUMBER + 1):
                 if i // (2 ** (j - 1)) % 2 == 1:
-                    matrix[i][j] = 1
-                else:
                     matrix[i][j] = -1
+                else:
+                    matrix[i][j] = 1
                 x.append(matrix[i][j])
 
             matrix[i][0] = 1
@@ -66,9 +66,9 @@ class Experiment():
             matrix[i][0] = 1
             for j in range(1, FACTORS_NUMBER - 1):
                 if i // (2 ** (j - 1)) % 2 == 1:
-                    matrix[i][j] = 1
-                else:
                     matrix[i][j] = -1
+                else:
+                    matrix[i][j] = 1
 
             matrix[i][5] = matrix[i][2] * matrix[i][3] * matrix[i][4]
             matrix[i][6] = matrix[i][1] * matrix[i][2] * matrix[i][3] * matrix[i][4]

@@ -672,7 +672,7 @@
      <x>10</x>
      <y>550</y>
      <width>1801</width>
-     <height>391</height>
+     <height>451</height>
     </rect>
    </property>
    <property name="font">
@@ -692,9 +692,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>7</y>
+       <y>10</y>
        <width>1781</width>
-       <height>601</height>
+       <height>401</height>
       </rect>
      </property>
      <property name="font">
@@ -719,16 +719,14 @@
       <number>57</number>
      </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>80</number>
+      <number>63</number>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
-     <row>
-      <property name="text">
-       <string>Новая строка</string>
-      </property>
-     </row>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>35</number>
+     </attribute>
      <row>
       <property name="text">
        <string>Новая строка</string>
@@ -1068,11 +1066,6 @@
        <string>|Y - Yнл|</string>
       </property>
      </item>
-     <item row="1" column="0">
-      <property name="text">
-       <string>1</string>
-      </property>
-     </item>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_6">
@@ -1083,9 +1076,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>7</y>
+       <y>10</y>
        <width>1771</width>
-       <height>591</height>
+       <height>401</height>
       </rect>
      </property>
      <property name="font">
@@ -1107,16 +1100,14 @@
       <bool>false</bool>
      </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>80</number>
+      <number>79</number>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
-     <row>
-      <property name="text">
-       <string>Новая строка</string>
-      </property>
-     </row>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>35</number>
+     </attribute>
      <row>
       <property name="text">
        <string>Новая строка</string>
@@ -1385,11 +1376,6 @@
      <item row="0" column="21">
       <property name="text">
        <string>|Y - Yнл|</string>
-      </property>
-     </item>
-     <item row="1" column="0">
-      <property name="text">
-       <string>1</string>
       </property>
      </item>
     </widget>
