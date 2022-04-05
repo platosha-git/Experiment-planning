@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1027</width>
-    <height>148</height>
+    <width>1934</width>
+    <height>170</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>1001</width>
-     <height>131</height>
+     <width>1791</width>
+     <height>151</height>
     </rect>
    </property>
    <property name="font">
@@ -40,8 +40,8 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>981</width>
-       <height>81</height>
+       <width>1771</width>
+       <height>91</height>
       </rect>
      </property>
      <property name="font">
@@ -66,10 +66,13 @@
       <number>57</number>
      </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>80</number>
+      <number>63</number>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>35</number>
      </attribute>
      <row>
       <property name="text">
@@ -431,8 +434,8 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>981</width>
-       <height>81</height>
+       <width>1771</width>
+       <height>91</height>
       </rect>
      </property>
      <property name="font">
@@ -454,10 +457,13 @@
       <bool>false</bool>
      </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>80</number>
+      <number>79</number>
      </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>35</number>
      </attribute>
      <row>
       <property name="text">

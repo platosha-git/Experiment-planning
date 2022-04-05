@@ -27,8 +27,6 @@ class MainWindow(QWidget):
         self.check_table = CheckTableWidget()
         self.b_full = None
         self.b_partial = None
-        self.full_table_position = 1
-        self.partial_table_position = 1
 
 
     @pyqtSlot(name='on_calc_button_clicked')
@@ -200,16 +198,13 @@ class MainWindow(QWidget):
         res[-3] = abs(res[-5] - res[-1])
         res[-4] = res[-5] - res[-2]
 
-        self.check_table.show(res, 'full_table', ui.full_table_position)
-        self.full_table_position = self.full_table_position + 1
+        self.check_table.show(res, 'full_table')
 
 
     def check_partial(self, point):
         ui = self.ui
         res = self.experiment.check(point, CHECK_PARTIAL)
-
-        self.check_table.show(res, 'partial_table', ui.partial_table_position)
-        self.partial_table_position = self.partial_table_position + 1
+        self.check_table.show(res, 'partial_table')
 
 
     def set_value(self, table, line, column, format, value):
@@ -218,52 +213,39 @@ class MainWindow(QWidget):
         table.setItem(line, column, item)
 
 
-    def show_table_full(self):
-        ui = self.ui
+    def show_table(self, res, table):
+        table.setRowCount(1)
+        table_pos = 1
 
+        for i in range(len(res)):            
+            table.setRowCount(table_pos + 1)
+            table_len = len(res[i])
+            for j in range(table_len + 1):
+                if j == 0:
+                    self.set_value(table, table_pos, 0, '%d', table_pos)
+                elif j < table_len - 4:
+                    self.set_value(table, table_pos, j, '%d', res[i][j - 1])
+                else:
+                    self.set_value(table, table_pos, j, '%.4f', res[i][j - 1])
+            table_pos += 1
+
+
+    def show_table_full(self):
         for i in range(len(self.plan_table_full)):
             if i < 64:
                 self.plan_table_full[i][-1] = 0
                 self.plan_table_full[i][-3] = self.plan_table_full[i][-5]
-
-        ui.plan_table.setRowCount(1)
-        Table_position = 1
-
-        for i in range(len(self.plan_table_full)):            
-            ui.plan_table.setRowCount(Table_position + 1)
-            table_len = len(self.plan_table_full[i])
-            for j in range(table_len + 1):
-                if j == 0:
-                    self.set_value(ui.plan_table, Table_position, 0, '%d', Table_position)
-                elif j < table_len - 4:
-                    self.set_value(ui.plan_table, Table_position, j, '%d', self.plan_table_full[i][j - 1])
-                else:
-                    self.set_value(ui.plan_table, Table_position, j, '%.4f', self.plan_table_full[i][j - 1])
-            Table_position += 1
+        
+        self.show_table(self.plan_table_full, self.ui.plan_table)        
 
 
     def show_table_partial(self):
-        ui = self.ui
-
         for i in range(len(self.plan_table_partial)):
             if i < 64:
                 self.plan_table_partial[i][-1] /= 10
             self.plan_table_partial[i][-3] = self.plan_table_partial[i][-5] - self.plan_table_partial[i][-1]
 
-        ui.plan_table_2.setRowCount(1)
-        Table_position = 1
-
-        for i in range(len(self.plan_table_partial)):            
-            ui.plan_table_2.setRowCount(Table_position + 1)
-            table_len = len(self.plan_table_partial[i])
-            for j in range(table_len + 1):
-                if j == 0:
-                    self.set_value(ui.plan_table_2, Table_position, 0, '%d', Table_position)
-                elif j < table_len - 4:
-                    self.set_value(ui.plan_table_2, Table_position, j, '%d', self.plan_table_partial[i][j - 1])
-                else:
-                    self.set_value(ui.plan_table_2, Table_position, j, '%.4f', self.plan_table_partial[i][j - 1])
-            Table_position += 1
+        self.show_table(self.plan_table_partial, self.ui.plan_table_2)
 
 
 def qt_app():
