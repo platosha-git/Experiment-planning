@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QTableWidgetItem
 from experiment import Experiment
 from numpy import random as nr
 from itertools import *
+from checkWidget import CheckTableWidget
 
 from experiment import FACTORS_NUMBER, CHECK_FULL, CHECK_PARTIAL
 
@@ -19,10 +20,11 @@ def suppress_qt_warnings():
 class MainWindow(QWidget):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
-        self.ui = uic.loadUi("window.ui", self)
+        self.ui = uic.loadUi('widget.ui', self)
         self.experiment = None
         self.plan_table_full = None
         self.plan_table_partial = None
+        self.check_table = CheckTableWidget()
         self.b_full = None
         self.b_partial = None
         self.full_table_position = 1
@@ -67,35 +69,26 @@ class MainWindow(QWidget):
             self.experiment = Experiment(gen_1, gen_2, pm_1, pm_2, time)
             self.b_full, self.b_partial, self.plan_table_full, self.plan_table_partial = self.experiment.calculate()
 
-            self.show_results()
-            self.show_table_full();
-            self.show_table_partial();
+            self.show_eq_full()
+            self.show_eq_partial()
 
+            self.show_table_full()
+            self.show_table_partial()
 
         except ValueError as e:
             QMessageBox.warning(self, 'Ошибка', 'Ошибка входных данных!\n' + str(e))
 
 
-    def set_value(self, table, line, column, format, value):
-        item = QTableWidgetItem(format % value)
-        item.setTextAlignment(Qt.AlignRight)
-        table.setItem(line, column, item)
-
-    def get_nonlin_regr_format_string(self, regr, factors_number):
+    def get_nonlin_regr_string(self, regr, factors_number):
         x = []
         for i in range(FACTORS_NUMBER):
             x.append("x%d" % (i + 1))
-
         res_str = "y = %.3f"
+        
         pos = 1
         for i in range(1, factors_number + 1):
             for comb in combinations(x, i):
-                cur_str = "%.3f"
-                if regr[pos] < 0:
-                    cur_str = " - " + cur_str
-                    regr[pos] = abs(regr[pos])
-                else:
-                    cur_str = " + " + cur_str
+                cur_str = " + %.3f"
 
                 for item in comb:
                     cur_str += item
@@ -104,8 +97,9 @@ class MainWindow(QWidget):
 
         return res_str
 
+
     def get_regr_string(self, b, factors_number):
-        nonlin_regr_format_str = self.get_nonlin_regr_format_string(b, factors_number)
+        nonlin_regr_format_str = self.get_nonlin_regr_string(b, factors_number)
         nonlin_regr_str = (nonlin_regr_format_str % tuple(b))
 
         lin_regr_list = b[:(FACTORS_NUMBER + 1)]
@@ -116,21 +110,28 @@ class MainWindow(QWidget):
         return lin_regr_str, nonlin_regr_str
 
 
-    def show_results(self):
+    def show_eq_full(self):
         ui = self.ui
 
         for i in range(len(self.b_full)):
             while -0.01 <= self.b_full[i] < 0.01:
                 self.b_full[i] = nr.rand() / 30
+
         while (len(self.b_full)) < 64:
             self.b_full.append(nr.rand() / 10000)
 
         self.b_full[4], self.b_full[5] = self.b_full[5], self.b_full[4]
-        lin_regr_str_full, nonlin_regr_str_full = self.get_regr_string(self.b_full, 6)
+        lin_regr_full, nonlin_regr_full = self.get_regr_string(self.b_full, 6)
 
-        ui.line_edit_lin_regr_full.setText(str(lin_regr_str_full))
-        ui.line_edit_nonlin_regr_full.setText(str(nonlin_regr_str_full))
+        lin_regr_full = lin_regr_full.replace("+ -", "- ")
+        nonlin_regr_full = nonlin_regr_full.replace("+ -", "- ")
 
+        ui.line_edit_lin_regr_full.setText(str(lin_regr_full))
+        ui.line_edit_nonlin_regr_full.setText(str(nonlin_regr_full))
+
+
+    def show_eq_partial(self):
+        ui = self.ui
         b_partial = self.b_partial
 
         lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
@@ -199,29 +200,22 @@ class MainWindow(QWidget):
         res[-3] = abs(res[-5] - res[-1])
         res[-4] = res[-5] - res[-2]
 
-        self.ui.full_table_position = self.show_check_result(res, ui.table_full, ui.full_table_position)
+        self.check_table.show(res, 'full_table', ui.full_table_position)
+        self.full_table_position = self.full_table_position + 1
 
 
     def check_partial(self, point):
         ui = self.ui
         res = self.experiment.check(point, CHECK_PARTIAL)
-        self.ui.partial_table_position = self.show_check_result(res, ui.table_partial, ui.partial_table_position)
+
+        self.check_table.show(res, 'partial_table', ui.partial_table_position)
+        self.partial_table_position = self.partial_table_position + 1
 
 
-    def show_check_result(self, res, table, table_position):
-        ui = self.ui
-
-        table.setRowCount(table_position + 1)
-        table_len = len(res)
-        for j in range(table_len + 1):
-            if j == 0:
-                self.set_value(table, table_position, 0, '%d', table_position)
-            elif j < table_len - 4:
-                self.set_value(table, table_position, j, '%g', res[j - 1])
-            else:
-                self.set_value(table, table_position, j, '%.4f', res[j - 1])
-        table_position += 1
-        return table_position
+    def set_value(self, table, line, column, format, value):
+        item = QTableWidgetItem(format % value)
+        item.setTextAlignment(Qt.AlignRight)
+        table.setItem(line, column, item)
 
 
     def show_table_full(self):

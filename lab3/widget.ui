@@ -1416,7 +1416,7 @@
     <attribute name="title">
      <string>Точка в ПФЭ</string>
     </attribute>
-    <widget class="QTableWidget" name="table_full">
+    <widget class="QTableWidget" name="table_full2">
      <property name="geometry">
       <rect>
        <x>10</x>
