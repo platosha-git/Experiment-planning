@@ -315,5 +315,3 @@ class Experiment():
         res = nonlin_x_comb + [exp_y, lin_y, nonlin_y, abs(exp_y - lin_y), abs(exp_y - nonlin_y)]
         
         return res
-        
-
