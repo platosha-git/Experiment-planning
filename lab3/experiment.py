@@ -170,9 +170,6 @@ class Experiment():
 
         ylin, ynlin = self.fill_y(plan, b[:int(np.log2(len(b))) + 1], b)
         self.fill_plan(plan, y, ylin, ynlin)
-        # ylin, ynlin = fill_y(custom_plan, b[:int(np.log2(len(b))) + 1], b)
-        # if len(custom_plan) > 0:
-        #     fill_plan(custom_plan, y, ylin, ynlin)
 
         return b
 
@@ -182,9 +179,6 @@ class Experiment():
 
         ylin, ynlin = self.fill_y(plan, b[:int(np.log2(len(b))) + 1], b)
         self.fill_plan(plan, y, ylin, ynlin)
-        # ylin, ynlin = fill_y(custom_plan, b[:int(np.log2(len(b))) + 1], b)
-        # if len(custom_plan) > 0:
-        #     fill_plan(custom_plan, y, ylin, ynlin)
 
         return b
 
@@ -228,15 +222,15 @@ class Experiment():
     def point_scaling(self, x):
         gen_int = []
         gen_int.append(self.scale_factor(x[0], self.min_gen_int[0], self.max_gen_int[0]))
-        gen_int.append(self.scale_factor(x[1], self.min_gen_int[1], self.max_gen_int[1]))
+        gen_int.append(self.scale_factor(x[3], self.min_gen_int[1], self.max_gen_int[1]))
 
         gen_var = []
         gen_var.append(self.scale_factor(x[1], self.min_gen_var[0], self.max_gen_var[0]))
-        gen_var.append(self.scale_factor(x[3], self.min_gen_var[1], self.max_gen_var[1]))
+        gen_var.append(self.scale_factor(x[4], self.min_gen_var[1], self.max_gen_var[1]))
 
         pm_int = []
         pm_int.append(self.scale_factor(x[2], self.min_pm_int[0], self.max_pm_int[0]))
-        pm_int.append(self.scale_factor(x[4], self.min_pm_int[1], self.max_pm_int[1]))
+        pm_int.append(self.scale_factor(x[5], self.min_pm_int[1], self.max_pm_int[1]))
 
         pm_var = []
         # pm_var.append(self.scale_factor(x[3], self.min_pm_var[0], self.max_pm_var[0]))
@@ -252,8 +246,6 @@ class Experiment():
 
             exp_res = 0
             for i in range(MOD_NUMBER):
-                # model = Modeller(a1, b1, a2, b2, weib_a, weib_lamb, 1/pm_int)
-                # ro, avg_wait_time = model.event_based_modelling(self.time)
                 avg_wait_time = modelling(a, b, lamb, self.time)
                 exp_res += avg_wait_time
             exp_res /= MOD_NUMBER
@@ -270,6 +262,7 @@ class Experiment():
 
         self.full_b = self.expand_full_plan(full_matrix, full_y)
         self.partial_b = self.expand_partial_plan(partial_matrix, partial_y)
+
         return self.full_b, self.partial_b, full_matrix, partial_matrix
 
     def calc_nonlin_plan(self, point, typeDfo=False):
@@ -295,8 +288,7 @@ class Experiment():
         for i in range(MOD_NUMBER):
             gen_int, gen_var, pm_int, pm_var = self.point_scaling(point)
             a, b, lamb = self.params_convert(gen_int, gen_var, pm_int, pm_var)
-            # model = Modeller(a1, b1, a2, b2, weib_a, weib_lamb, 1/pm_int) 
-            # ro, avg_wait_time = model.event_based_modelling(self.time)
+
             avg_wait_time = modelling(a, b, lamb, self.time)
             exp_y += avg_wait_time
          

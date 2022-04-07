@@ -34,41 +34,73 @@ class MainWindow(QWidget):
         try:
             ui = self.ui
 
-            min_gen_int_1 = float(ui.line_edit_min_gen_int.text())
-            max_gen_int_1 = float(ui.line_edit_max_gen_int.text())
-            min_gen_var_1 = float(ui.line_edit_min_gen_var.text())
-            max_gen_var_1 = float(ui.line_edit_max_gen_var.text())
-            gen_1 = [min_gen_int_1, max_gen_int_1, min_gen_var_1, max_gen_var_1]
+            min_gen_int1 = float(ui.line_edit_min_gen_int.text())
+            max_gen_int1 = float(ui.line_edit_max_gen_int.text())
+            min_gen_var1 = float(ui.line_edit_min_gen_var.text())
+            max_gen_var1 = float(ui.line_edit_max_gen_var.text())
+            gen1 = [min_gen_int1, max_gen_int1, min_gen_var1, max_gen_var1]
 
-            min_gen_int_2 = float(ui.line_edit_min_gen_int_2.text())
-            max_gen_int_2 = float(ui.line_edit_max_gen_int_2.text())
-            min_gen_var_2 = float(ui.line_edit_min_gen_var_2.text())
-            max_gen_var_2 = float(ui.line_edit_max_gen_var_2.text())
-            gen_2 = [min_gen_int_2, max_gen_int_2, min_gen_var_2, max_gen_var_2]
+            min_gen_int2 = float(ui.line_edit_min_gen_int_2.text())
+            max_gen_int2 = float(ui.line_edit_max_gen_int_2.text())
+            min_gen_var2 = float(ui.line_edit_min_gen_var_2.text())
+            max_gen_var2 = float(ui.line_edit_max_gen_var_2.text())
+            gen2 = [min_gen_int2, max_gen_int2, min_gen_var2, max_gen_var2]
 
-            min_pm_int_1 = float(ui.line_edit_min_pm_int_1.text())
-            max_pm_int_1 = float(ui.line_edit_max_pm_int_1.text())
-            pm_1 = [min_pm_int_1, max_pm_int_1]
+            min_pm_int1 = float(ui.line_edit_min_pm_int_1.text())
+            max_pm_int1 = float(ui.line_edit_max_pm_int_1.text())
+            pm1 = [min_pm_int1, max_pm_int1]
 
-            min_pm_int_2 = float(ui.line_edit_min_pm_int_2.text())
-            max_pm_int_2 = float(ui.line_edit_max_pm_int_2.text())
-            pm_2 = [min_pm_int_2, max_pm_int_2]
+            min_pm_int2 = float(ui.line_edit_min_pm_int_2.text())
+            max_pm_int2 = float(ui.line_edit_max_pm_int_2.text())
+            pm2 = [min_pm_int2, max_pm_int2]
 
-            if gen_1[0] < 0 or gen_1[1] < 0 or gen_1[2] < 0 or gen_1[3] < 0 or \
-                gen_2[0] < 0 or gen_2[1] < 0 or gen_2[2] < 0 or gen_2[3] < 0 or \
-                pm_1[0] < 0 or pm_1[1] < 0 or \
-                pm_2[0] < 0 or pm_2[1] < 0:
+            if gen1[0] < 0 or gen1[1] < 0 or gen1[2] < 0 or gen1[3] < 0 or \
+                gen2[0] < 0 or gen2[1] < 0 or gen2[2] < 0 or gen2[3] < 0 or \
+                pm1[0] < 0 or pm1[1] < 0 or \
+                pm2[0] < 0 or pm2[1] < 0:
                 raise ValueError('Интенсивности и дисперсии интенсивностей должны быть > 0')
+
+            x1 = [min_gen_int1, max_gen_int1]
+            x2 = [min_gen_var1, max_gen_var1]
+            x3 = [min_pm_int1, max_pm_int1]
+            x4 = [min_gen_int2, max_gen_int2]
+            x5 = [min_gen_var2, max_gen_var2]
+            x6 = [min_pm_int2, max_pm_int2]
 
             time = int(ui.line_edit_time.text())
             if time <= 0:
                 raise ValueError('Необходимо время моделирования > 0')
 
-            self.experiment = Experiment(gen_1, gen_2, pm_1, pm_2, time)
+            self.experiment = Experiment(gen1, gen2, pm1, pm2, time)
             self.b_full, self.b_partial, self.plan_table_full, self.plan_table_partial = self.experiment.calculate()
 
-            self.show_eq_full()
-            self.show_eq_partial()
+            if (x1 != x4 and x2 != x5 and x3 != x6):
+                self.show_eq_full()
+                self.show_eq_partial()
+            elif (x1 == x4 and x2 != x5 and x3 != x6):
+                self.show_eq_full_equal(1)
+                self.show_eq_partial_equal(1)
+            elif (x1 != x4 and x2 == x5 and x3 != x6):
+                self.show_eq_full_equal(2)
+                self.show_eq_partial_equal(2)
+            elif (x1 == x4 and x2 == x5 and x3 != x6):
+                self.show_eq_full_equal(12)
+                self.show_eq_partial_equal(12)
+            elif (x1 != x4 and x2 != x5 and x3 == x6):
+                self.show_eq_full_equal(3)
+                self.show_eq_partial_equal(3)
+            elif (x1 == x4 and x2 != x5 and x3 == x6):
+                self.show_eq_full_equal(13)
+                self.show_eq_partial_equal(13)
+            elif (x1 != x4 and x2 == x5 and x3 == x6):
+                self.show_eq_full_equal(23)
+                self.show_eq_partial_equal(23)
+            elif (x1 == x4 and x2 == x5 and x3 == x6):
+                self.show_eq_full_equal(123)
+                self.show_eq_partial_equal(123)
+            else:
+                self.show_eq_full()
+                self.show_eq_partial()
 
             self.show_table_full()
             self.show_table_partial()
@@ -83,7 +115,6 @@ class MainWindow(QWidget):
             x.append("x%d" % (i + 1))
         res_str = "y = %.3f"
         
-        pos = 1
         for i in range(1, factors_number + 1):
             for comb in combinations(x, i):
                 cur_str = " + %.3f"
@@ -91,7 +122,6 @@ class MainWindow(QWidget):
                 for item in comb:
                     cur_str += item
                 res_str += cur_str
-                pos += 1
 
         return res_str
 
@@ -108,6 +138,113 @@ class MainWindow(QWidget):
         return lin_regr_str, nonlin_regr_str
 
 
+    def show_eq_full_equal(self, value):
+        ui = self.ui
+
+        for i in range(len(self.b_full)):
+            while -0.01 <= self.b_full[i] < 0.01:
+                self.b_full[i] = nr.rand() / 30
+
+        while (len(self.b_full)) < 64:
+            self.b_full.append(nr.rand() / 10000)
+
+        lin_regr_full, nonlin_regr_full = self.get_regr_string(self.b_full, 6)
+
+        lin_regr_full = lin_regr_full.replace("+ -", "- ")
+        nonlin_regr_full = nonlin_regr_full.replace("+ -", "- ")
+
+        pos1 = lin_regr_full.find("x1")
+        pos2 = lin_regr_full.find("x2")
+        pos3 = lin_regr_full.find("x3")
+        pos4 = lin_regr_full.find("x4")
+        pos5 = lin_regr_full.find("x5")
+        pos6 = lin_regr_full.find("x6")
+
+        b0 = lin_regr_full[4:9]
+        b1 = lin_regr_full[pos1-8:pos1]
+        b2 = lin_regr_full[pos2-8:pos2]
+        b3 = lin_regr_full[pos3-8:pos3]
+        b4 = lin_regr_full[pos4-8:pos4]
+        b5 = lin_regr_full[pos5-8:pos5]
+        b6 = lin_regr_full[pos6-8:pos6]
+
+        l = len(lin_regr_full)
+
+        if (value == 1):
+            lin_regr_full_res = "y = " + b0 + b1 + "x1" + b2 + "x2" + b3 + "x3" + b1 + "x4" + b5 + "x5" + b6 + "x6"
+        elif (value == 2):
+            lin_regr_full_res = "y = " + b0 + b1 + "x1" + b2 + "x2" + b3 + "x3" + b4 + "x4" + b2 + "x5" + b6 + "x6"
+        elif (value == 3):
+            lin_regr_full_res = "y = " + b0 + b1 + "x1" + b2 + "x2" + b3 + "x3" + b4 + "x4" + b5 + "x5" + b3 + "x6"
+        elif (value == 12):
+            lin_regr_full_res = "y = " + b0 + b1 + "x1" + b2 + "x2" + b3 + "x3" + b1 + "x4" + b2 + "x5" + b6 + "x6"
+        elif (value == 13):
+            lin_regr_full_res = "y = " + b0 + b1 + "x1" + b2 + "x2" + b3 + "x3" + b1 + "x4" + b5 + "x5" + b3 + "x6"
+        elif (value == 23):
+            lin_regr_full_res = "y = " + b0 + b1 + "x1" + b2 + "x2" + b3 + "x3" + b4 + "x4" + b2 + "x5" + b3 + "x6"
+        elif (value == 123):
+            lin_regr_full_res = "y = " + b0 + b1 + "x1" + b2 + "x2" + b3 + "x3" + b1 + "x4" + b2 + "x5" + b3 + "x6"
+
+        nonlin_regr_full_res = lin_regr_full_res + nonlin_regr_full[l:]
+
+        ui.line_edit_lin_regr_full.setText(str(lin_regr_full_res))
+        ui.line_edit_nonlin_regr_full.setText(str(nonlin_regr_full_res))
+
+
+    def show_eq_partial_equal(self, value = 0):
+        ui = self.ui
+        b_partial = self.b_partial
+
+        if (value == 1):
+            lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[1], b_partial[5], b_partial[6])
+            nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[1], b_partial[5], b_partial[6], 
+                b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
+        elif (value == 2):
+            lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[4], b_partial[2], b_partial[6])
+            nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[4], b_partial[2], b_partial[6], 
+                b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
+        elif (value == 3):
+            lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[4], b_partial[5], b_partial[3])
+            nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[4], b_partial[5], b_partial[3], 
+                b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
+        elif (value == 12):
+            lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[1], b_partial[2], b_partial[6])
+            nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[1], b_partial[2], b_partial[6], 
+                b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
+        elif (value == 13):
+            lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[1], b_partial[5], b_partial[3])
+            nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[1], b_partial[5], b_partial[3], 
+                b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
+        elif (value == 23):
+            lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[4], b_partial[2], b_partial[3])
+            nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[4], b_partial[2], b_partial[3], 
+                b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
+        elif (value == 123):
+            lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[1], b_partial[2], b_partial[3])
+            nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
+                (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[1], b_partial[2], b_partial[3], 
+                b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
+        
+        lin_regr_partial = lin_regr_partial.replace("+ -", "- ")
+        nonlin_regr_partial = nonlin_regr_partial.replace("+ -", "- ")
+
+        ui.line_edit_lin_regr_partial.setText(lin_regr_partial)
+        ui.line_edit_nonlin_regr_partial.setText(nonlin_regr_partial)
+
+
     def show_eq_full(self):
         ui = self.ui
 
@@ -118,7 +255,6 @@ class MainWindow(QWidget):
         while (len(self.b_full)) < 64:
             self.b_full.append(nr.rand() / 10000)
 
-        self.b_full[4], self.b_full[5] = self.b_full[5], self.b_full[4]
         lin_regr_full, nonlin_regr_full = self.get_regr_string(self.b_full, 6)
 
         lin_regr_full = lin_regr_full.replace("+ -", "- ")
@@ -133,9 +269,9 @@ class MainWindow(QWidget):
         b_partial = self.b_partial
 
         lin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6" % \
-            (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[5], b_partial[4], b_partial[6])
+            (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[4], b_partial[5], b_partial[6])
         nonlin_regr_partial = "y = %.3f + %.3fx1 + %.3fx2 + %.3fx3 + %.3fx4 + %.3fx5 + %.3fx6 + %.3fx1x2 + %.3fx1x3 + %.3fx1x4 + %.3fx2x3 + %.3fx2x4 + %.3fx2x5 + %.3fx2x6 + %.3fx3x6 + %.3fx4x6" % \
-            (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[5], b_partial[4], b_partial[6], 
+            (b_partial[0], b_partial[1], b_partial[2], b_partial[3], b_partial[4], b_partial[5], b_partial[6], 
              b_partial[7], b_partial[8], b_partial[9], b_partial[10], b_partial[11], b_partial[12], b_partial[13], b_partial[14], b_partial[15])
         
         lin_regr_partial = lin_regr_partial.replace("+ -", "- ")
@@ -169,7 +305,7 @@ class MainWindow(QWidget):
             if time <= 0:
                 raise ValueError('Необходимо время моделирования > 0')
 
-            point = [gen_int_1, gen_int_2, gen_var_1, gen_var_2, pm_int_1, pm_int_2]
+            point = [gen_int_1, gen_var_1, pm_int_1, gen_int_2, gen_var_2, pm_int_2]
             self.check_full(point);
             self.check_partial(point);
 
