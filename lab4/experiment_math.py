@@ -1,22 +1,17 @@
 import numpy as np
 import itertools as it
 
-
-def calc_n(factors_amount):
-    return 2 ** factors_amount
-
-
-def calc_exp_amount(factors_amount, n):
-    return n + 2 * factors_amount + 1
+FACTORS_NUMBER = 6
+N = 2**FACTORS_NUMBER
+EXP_AMOUNT = N + 2 * FACTORS_NUMBER + 1
 
 
-def calc_star_length(n, exp_amount):
-    print(exp_amount)
-    return (((n * exp_amount) ** 0.5 - n) / 2) ** 0.5
+def calc_star_length():
+    return (((N * EXP_AMOUNT) ** 0.5 - N) / 2) ** 0.5
 
 
-def calc_star_shift(n, exp_amount):
-    return (n / exp_amount) ** 0.5
+def calc_star_shift():
+    return (N / EXP_AMOUNT) ** 0.5
 
 
 def combination(factors):
@@ -34,23 +29,24 @@ def shifted_points(factors, a):
     return res
 
 
-def fill_factors(plan, factors_amount, n):
+def fill_factors(plan):
     step = 1
-    for j in range(factors_amount):
+    for j in range(FACTORS_NUMBER):
         sign = -1
-        for i in range(n):
+        for i in range(N):
             plan[i][j + 1] = sign
             if (i + 1) % step == 0:
                 sign *= -1
         step *= 2
 
 
-def fill_star_sides(plan, factors_amount, n, exp_amount):
+def fill_star_sides(plan):
     sign = -1
     factori = 0
-    d = calc_star_length(n, exp_amount)
-    for i in range(n, exp_amount - 1):
-        factors = [0] * factors_amount
+    d = calc_star_length()
+
+    for i in range(N, EXP_AMOUNT - 1):
+        factors = [0] * FACTORS_NUMBER
         factors[factori] = sign * d
         plan[i].extend(factors)
         if sign == 1:
@@ -60,26 +56,24 @@ def fill_star_sides(plan, factors_amount, n, exp_amount):
             sign = 1
 
 
-def fill_star_center(plan, factors_amount, n, exp_amount):
-    a = calc_star_shift(n, exp_amount)
-    plan[exp_amount - 1].extend([0] * (n - 1))
-    plan[exp_amount - 1].extend([-a] * factors_amount)
+def fill_star_center(plan):
+    a = calc_star_shift()
+    plan[EXP_AMOUNT - 1].extend([0] * (N - 1))
+    plan[EXP_AMOUNT - 1].extend([-a] * FACTORS_NUMBER)
 
 
-def matrix_plan(factors_amount):
-    n = calc_n(factors_amount)
-    exp_amount = calc_exp_amount(factors_amount, n)
-    res = [[1 for i in range(1 + factors_amount)] for j in range(n)]
-    res.extend([[1 for i in range(1)] for j in range(exp_amount - n)])
+def matrix_plan():
+    res = [[1 for i in range(1 + FACTORS_NUMBER)] for j in range(N)]
+    res.extend([[1 for i in range(1)] for j in range(EXP_AMOUNT - N)])
 
-    fill_factors(res, factors_amount, n)
-    fill_star_sides(res, factors_amount, n, exp_amount)
-    fill_star_center(res, factors_amount, n, exp_amount)
+    fill_factors(res)
+    fill_star_sides(res)
+    fill_star_center(res)
 
-    a = calc_star_shift(n, exp_amount)
-    for i in range(exp_amount - 1):
-        res[i].extend(combination(res[i][1:factors_amount + 1]))
-        res[i].extend(shifted_points(res[i][1:factors_amount + 1], a))
+    a = calc_star_shift()
+    for i in range(EXP_AMOUNT - 1):
+        res[i].extend(combination(res[i][1:FACTORS_NUMBER + 1]))
+        res[i].extend(shifted_points(res[i][1:FACTORS_NUMBER + 1], a))
 
     return res
 
@@ -128,7 +122,3 @@ def expand_plan(plan, custom_plan, y):
         fill_plan(custom_plan, y[len(plan):], ycalc)
 
     return b
-
-
-def scale_factor(x, realmin, realmax, xmin=-1, xmax=1):
-    return realmin + (realmax - realmin) * (x - xmin) / (xmax - xmin)
