@@ -1,9 +1,11 @@
 from numpy.random import exponential, normal
 
 
+def uniform_by_intensity(params):
+    return uniform(params[0], params[1])
+    
 def exp_by_intensity(params):
     return exponential(1 / params[0])
-
 
 def norm_by_intensity(params):
     res = -1
