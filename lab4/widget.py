@@ -8,7 +8,7 @@ from form_equation import *
 
 
 def scale_factor(x, realmin, realmax, xmin=-1, xmax=1):
-        return realmin + (realmax - realmin) * (x - xmin) / (xmax - xmin)
+    return realmin + (realmax - realmin) * (x - xmin) / (xmax - xmin)
 
 
 class MainWindow(QMainWindow):
@@ -53,11 +53,11 @@ class MainWindow(QMainWindow):
         passed = True
         entries = [
             [self.entry_gen1_int_min, self.entry_gen1_int_max],
+            [self.entry_gen1_var_min, self.entry_gen1_var_max],
             [self.entry_gen2_int_min, self.entry_gen2_int_max],
+            [self.entry_gen2_var_min, self.entry_gen2_var_max],
             [self.entry_proc1_int_min, self.entry_proc1_int_max],
-            [self.entry_proc1_dev_min, self.entry_proc1_dev_max],
-            [self.entry_proc2_int_min, self.entry_proc2_int_max],
-            [self.entry_proc2_dev_min, self.entry_proc2_dev_max]
+            [self.entry_proc2_int_min, self.entry_proc2_int_max]
         ]
 
         for i in range(len(entries)):
@@ -75,6 +75,7 @@ class MainWindow(QMainWindow):
             
             except ValueError:
                 pass
+
         return passed
 
 
@@ -86,59 +87,67 @@ class MainWindow(QMainWindow):
             try:
                 gen1_int_min = self.get_factor(self.entry_gen1_int_min)
                 gen1_int_max = self.get_factor(self.entry_gen1_int_max)
+
+                gen1_var_min = self.get_factor(self.entry_gen1_var_min)
+                gen1_var_max = self.get_factor(self.entry_gen1_var_max)
+
                 gen2_int_min = self.get_factor(self.entry_gen2_int_min)
                 gen2_int_max = self.get_factor(self.entry_gen2_int_max)
+
+                gen2_var_min = self.get_factor(self.entry_gen2_var_min)
+                gen2_var_max = self.get_factor(self.entry_gen2_var_max)
+                
                 proc1_int_min = self.get_factor(self.entry_proc1_int_min)
                 proc1_int_max = self.get_factor(self.entry_proc1_int_max)
-                proc1_dev_min = self.get_factor(self.entry_proc1_dev_min)
-                proc1_dev_max = self.get_factor(self.entry_proc1_dev_max)
+
                 proc2_int_min = self.get_factor(self.entry_proc2_int_min)
                 proc2_int_max = self.get_factor(self.entry_proc2_int_max)
-                proc2_dev_min = self.get_factor(self.entry_proc2_dev_min)
-                proc2_dev_max = self.get_factor(self.entry_proc2_dev_max)
+
             except ValueError:
                 pass
 
             else:
                 y = list()
 
-                # for each experiment
                 for exp in self.plan:
                     gen_int1 = scale_factor(exp[1], gen1_int_min, gen1_int_max)
-                    gen_int2 = scale_factor(exp[2], gen2_int_min, gen2_int_max)
+                    gen_var1 = scale_factor(exp[2], gen1_var_min, gen1_var_max)
 
-                    proc_int1 = scale_factor(exp[3], proc1_int_min, proc1_int_max)
-                    proc_dev1 = scale_factor(exp[4], proc1_dev_min, proc1_dev_max)
-                    
-                    proc_int2 = scale_factor(exp[5], proc2_int_min, proc2_int_max)
-                    proc_dev2 = scale_factor(exp[6], proc2_dev_min, proc2_dev_max)
+                    gen_int2 = scale_factor(exp[3], gen2_int_min, gen2_int_max)
+                    gen_var2 = scale_factor(exp[4], gen2_var_min, gen2_var_max)
 
-                    gens = [Generator(exp_by_intensity, (gen_int1,)), Generator(exp_by_intensity, (gen_int2,))]
-                    procs = [Generator(norm_by_intensity, (proc_int1, proc_dev1)),
-                             Generator(norm_by_intensity, (proc_int2, proc_dev2))]
+                    proc_int1 = scale_factor(exp[5], proc1_int_min, proc1_int_max)
+                    proc_int2 = scale_factor(exp[6], proc2_int_min, proc2_int_max)
+
+                    gens = [Generator(uniform_by_intensity, (gen_int1, gen_var1)), 
+                            Generator(uniform_by_intensity, (gen_int2, gen_var2))]
+
+                    procs = [Generator(exp_by_intensity, (proc_int1,)), Generator(exp_by_intensity, (proc_int2,))]
                     model = EventModel(gens, procs, total_apps)
+                    res = model.proceed()
 
-                    y.append(model.proceed() / total_apps)
+                    y.append(res / total_apps)
 
 
                 for i in range(len(self.custom_plan)):
                     if len(self.custom_plan[i]) > 0:
                         gen_int1 = scale_factor(self.custom_plan[i][1], gen1_int_min, gen1_int_max)
-                        gen_int2 = scale_factor(self.custom_plan[i][2], gen2_int_min, gen2_int_max)
-                        
-                        proc_int1 = scale_factor(self.custom_plan[i][3], proc1_int_min, proc1_int_max)
-                        proc_dev1 = scale_factor(self.custom_plan[i][4], proc1_dev_min, proc1_dev_max)
-                        
-                        proc_int2 = scale_factor(self.custom_plan[i][5], proc2_int_min, proc2_int_max)
-                        proc_dev2 = scale_factor(self.custom_plan[i][6], proc2_dev_min, proc2_dev_max)
+                        gen_var1 = scale_factor(self.custom_plan[i][2], gen1_var_min, gen1_var_max)
 
-                        gens = [Generator(exp_by_intensity, (gen_int1,)),
-                                Generator(exp_by_intensity, (gen_int2,))]
-                        procs = [Generator(norm_by_intensity, (proc_int1, proc_dev1)),
-                                 Generator(norm_by_intensity, (proc_int2, proc_dev2))]
+                        gen_int2 = scale_factor(self.custom_plan[i][3], gen2_int_min, gen2_int_max)
+                        gen_var2 = scale_factor(self.custom_plan[i][4], gen2_var_min, gen2_var_max)
+                        
+                        proc_int1 = scale_factor(self.custom_plan[i][5], proc1_int_min, proc1_int_max)
+                        proc_int2 = scale_factor(self.custom_plan[i][6], proc2_int_min, proc2_int_max)
+
+                        gens = [Generator(uniform_by_intensity, (gen_int1, gen_var1)), 
+                            Generator(uniform_by_intensity, (gen_int2, gen_var2))]
+
+                        procs = [Generator(exp_by_intensity, (proc_int1,)), Generator(exp_by_intensity, (proc_int2,))]
                         model = EventModel(gens, procs, total_apps)
+                        res = model.proceed()
 
-                        y.append(model.proceed() / total_apps)
+                        y.append(res / total_apps)
 
                 else:
                     y.append(None)
@@ -160,7 +169,7 @@ class MainWindow(QMainWindow):
                                         QTableWidgetItem(str(round(self.custom_plan[i][j], 3))))
 
 
-    def set_equasion(self, accuracy=3):
+    def set_equasion(self, accuracy=4):
         if len(self.b) == 70:
             y = form_equasion(self.b, accuracy)
             y = y.replace("+ -", "- ")
@@ -169,7 +178,7 @@ class MainWindow(QMainWindow):
 
 
     def show_full_equasion(self):
-        accuracy = 3
+        accuracy = 4
         if len(self.b) == 70:
             y = form_full_equasion(self.b, accuracy)
             y = y.replace("+ -", "- ")

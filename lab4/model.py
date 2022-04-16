@@ -1,4 +1,4 @@
-from numpy.random import exponential, normal
+from numpy.random import uniform, exponential, normal
 
 
 def uniform_by_intensity(params):
