@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1450</width>
+    <width>1910</width>
     <height>1064</height>
    </rect>
   </property>
@@ -14,25 +14,6 @@
    <string/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="btn_full">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>390</y>
-      <width>111</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>120</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>Показать </string>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
@@ -425,9 +406,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>540</y>
-      <width>1421</width>
-      <height>451</height>
+      <y>490</y>
+      <width>1811</width>
+      <height>501</height>
      </rect>
     </property>
     <property name="rowCount">
@@ -1057,7 +1038,7 @@
      <rect>
       <x>10</x>
       <y>370</y>
-      <width>441</width>
+      <width>371</width>
       <height>81</height>
      </rect>
     </property>
@@ -1090,7 +1071,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Длина звездного плеча:</string>
+        <string>Длина звездного плеча:  </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1171,47 +1152,6 @@
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>470</y>
-      <width>1421</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Полученная модель:      </string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="label_y">
-       <property name="font">
-        <font>
-         <family>Ubuntu</family>
-         <pointsize>13</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
@@ -1435,6 +1375,21 @@
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="label_y">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>370</y>
+      <width>1421</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
    </widget>
   </widget>

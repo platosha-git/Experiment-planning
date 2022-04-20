@@ -21,7 +21,6 @@ class MainWindow(QMainWindow):
 
         self.btn_do_plan.clicked.connect(self.do_plan)
         self.btn_set.clicked.connect(self.set)
-        self.btn_full.clicked.connect(self.show_full_equasion)
 
         self.b = list()
         self.equation_window = EquationWindow()
@@ -39,6 +38,15 @@ class MainWindow(QMainWindow):
         self.show()
 
 
+    def get_entries(self):
+        return ([self.entry_gen1_int_min, self.entry_gen1_int_max],
+                [self.entry_gen1_var_min, self.entry_gen1_var_max],
+                [self.entry_proc1_int_min, self.entry_proc1_int_max],
+                [self.entry_gen2_int_min, self.entry_gen2_int_max],
+                [self.entry_gen2_var_min, self.entry_gen2_var_max],
+                [self.entry_proc2_int_min, self.entry_proc2_int_max])
+
+
     def get_factor(self, entry):
         delta = 1e-10
         res = get_valid(entry, float, lambda val: False)
@@ -54,9 +62,10 @@ class MainWindow(QMainWindow):
         entries = [
             [self.entry_gen1_int_min, self.entry_gen1_int_max],
             [self.entry_gen1_var_min, self.entry_gen1_var_max],
+            [self.entry_proc1_int_min, self.entry_proc1_int_max],
+
             [self.entry_gen2_int_min, self.entry_gen2_int_max],
             [self.entry_gen2_var_min, self.entry_gen2_var_max],
-            [self.entry_proc1_int_min, self.entry_proc1_int_max],
             [self.entry_proc2_int_min, self.entry_proc2_int_max]
         ]
 
@@ -112,17 +121,16 @@ class MainWindow(QMainWindow):
                 for exp in self.plan:
                     gen_int1 = scale_factor(exp[1], gen1_int_min, gen1_int_max)
                     gen_var1 = scale_factor(exp[2], gen1_var_min, gen1_var_max)
+                    proc_int1 = scale_factor(exp[3], proc1_int_min, proc1_int_max)
 
-                    gen_int2 = scale_factor(exp[3], gen2_int_min, gen2_int_max)
-                    gen_var2 = scale_factor(exp[4], gen2_var_min, gen2_var_max)
-
-                    proc_int1 = scale_factor(exp[5], proc1_int_min, proc1_int_max)
+                    gen_int2 = scale_factor(exp[4], gen2_int_min, gen2_int_max)
+                    gen_var2 = scale_factor(exp[5], gen2_var_min, gen2_var_max)
                     proc_int2 = scale_factor(exp[6], proc2_int_min, proc2_int_max)
 
                     gens = [Generator(uniform_by_intensity, (gen_int1, gen_var1)), 
                             Generator(uniform_by_intensity, (gen_int2, gen_var2))]
-
                     procs = [Generator(exp_by_intensity, (proc_int1,)), Generator(exp_by_intensity, (proc_int2,))]
+                    
                     model = EventModel(gens, procs, total_apps)
                     res = model.proceed()
 
@@ -133,15 +141,14 @@ class MainWindow(QMainWindow):
                     if len(self.custom_plan[i]) > 0:
                         gen_int1 = scale_factor(self.custom_plan[i][1], gen1_int_min, gen1_int_max)
                         gen_var1 = scale_factor(self.custom_plan[i][2], gen1_var_min, gen1_var_max)
+                        proc_int1 = scale_factor(self.custom_plan[i][3], proc1_int_min, proc1_int_max)
 
-                        gen_int2 = scale_factor(self.custom_plan[i][3], gen2_int_min, gen2_int_max)
-                        gen_var2 = scale_factor(self.custom_plan[i][4], gen2_var_min, gen2_var_max)
-                        
-                        proc_int1 = scale_factor(self.custom_plan[i][5], proc1_int_min, proc1_int_max)
+                        gen_int2 = scale_factor(self.custom_plan[i][4], gen2_int_min, gen2_int_max)
+                        gen_var2 = scale_factor(self.custom_plan[i][5], gen2_var_min, gen2_var_max)
                         proc_int2 = scale_factor(self.custom_plan[i][6], proc2_int_min, proc2_int_max)
 
                         gens = [Generator(uniform_by_intensity, (gen_int1, gen_var1)), 
-                            Generator(uniform_by_intensity, (gen_int2, gen_var2))]
+                                Generator(uniform_by_intensity, (gen_int2, gen_var2))]
 
                         procs = [Generator(exp_by_intensity, (proc_int1,)), Generator(exp_by_intensity, (proc_int2,))]
                         model = EventModel(gens, procs, total_apps)
@@ -155,7 +162,8 @@ class MainWindow(QMainWindow):
                 self.b = expand_plan(self.plan, self.custom_plan, y)
 
                 self.fill_table()
-                self.set_equasion()
+                #self.set_equasion()
+                self.show_full_equasion()
 
 
     def fill_table(self):
@@ -171,7 +179,8 @@ class MainWindow(QMainWindow):
 
     def set_equasion(self, accuracy=4):
         if len(self.b) == 70:
-            y = form_equasion(self.b, accuracy)
+            entries = self.get_entries()
+            y = form_equasion(self.b, accuracy, entries)
             y = y.replace("+ -", "- ")
             y = y.replace("+ \n-", "-\n")
             self.label_y.setText(y)
@@ -180,10 +189,12 @@ class MainWindow(QMainWindow):
     def show_full_equasion(self):
         accuracy = 4
         if len(self.b) == 70:
-            y = form_full_equasion(self.b, accuracy)
+            entries = self.get_entries()
+            y = form_equasion(self.b, accuracy, entries)
             y = y.replace("+ -", "- ")
             y = y.replace("+ \n-", "-\n")
-            self.equation_window.show(y)
+            self.label_y.setText(y)
+            #self.equation_window.show(y)
 
 
     def set(self):

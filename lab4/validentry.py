@@ -1,10 +1,8 @@
 def make_valid(entry):
     entry.setStyleSheet("background:#fff;")
 
-
 def make_invalid(entry):
     entry.setStyleSheet("background:#f88;")
-
 
 def get_valid(entry, type, is_wrong):
     try:
