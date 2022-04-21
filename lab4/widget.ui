@@ -1038,7 +1038,7 @@
      <rect>
       <x>10</x>
       <y>370</y>
-      <width>371</width>
+      <width>321</width>
       <height>81</height>
      </rect>
     </property>
@@ -1046,7 +1046,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label_37">
        <property name="text">
-        <string>Постоянная S:</string>
+        <string>Значение S:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1071,7 +1071,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Длина звездного плеча:  </string>
+        <string>Звездное плечо a:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1380,15 +1380,15 @@
    <widget class="QTextBrowser" name="label_y">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>360</x>
       <y>370</y>
-      <width>1421</width>
+      <width>1461</width>
       <height>101</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>13</pointsize>
      </font>
     </property>
    </widget>

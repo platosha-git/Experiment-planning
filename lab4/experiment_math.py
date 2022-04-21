@@ -2,16 +2,16 @@ import numpy as np
 import itertools as it
 
 FACTORS_NUMBER = 6
-N = 2**FACTORS_NUMBER
-EXP_AMOUNT = N + 2 * FACTORS_NUMBER + 1
+N = 2 ** FACTORS_NUMBER
+EXP_NUMBER = 2 ** FACTORS_NUMBER + 2 * FACTORS_NUMBER + 1
 
 
-def calc_star_length():
-    return (((N * EXP_AMOUNT) ** 0.5 - N) / 2) ** 0.5
+def S_calculate():
+    return np.sqrt(N / EXP_NUMBER)
 
 
-def calc_star_shift():
-    return (N / EXP_AMOUNT) ** 0.5
+def ALPHA_calculate():
+    return np.sqrt((N / 2) * (np.sqrt(EXP_NUMBER / N) - 1))
 
 
 def combination(factors):
@@ -43,11 +43,11 @@ def fill_factors(plan):
 def fill_star_sides(plan):
     sign = -1
     factori = 0
-    d = calc_star_length()
+    alpha = ALPHA_calculate()
 
-    for i in range(N, EXP_AMOUNT - 1):
+    for i in range(N, EXP_NUMBER - 1):
         factors = [0] * FACTORS_NUMBER
-        factors[factori] = sign * d
+        factors[factori] = sign * alpha
         plan[i].extend(factors)
         if sign == 1:
             factori += 1
@@ -57,23 +57,23 @@ def fill_star_sides(plan):
 
 
 def fill_star_center(plan):
-    a = calc_star_shift()
-    plan[EXP_AMOUNT - 1].extend([0] * (N - 1))
-    plan[EXP_AMOUNT - 1].extend([-a] * FACTORS_NUMBER)
+    s = S_calculate()
+    plan[EXP_NUMBER - 1].extend([0] * (N - 1))
+    plan[EXP_NUMBER - 1].extend([-s] * FACTORS_NUMBER)
 
 
 def matrix_plan():
     res = [[1 for i in range(1 + FACTORS_NUMBER)] for j in range(N)]
-    res.extend([[1 for i in range(1)] for j in range(EXP_AMOUNT - N)])
+    res.extend([[1 for i in range(1)] for j in range(EXP_NUMBER - N)])
 
     fill_factors(res)
     fill_star_sides(res)
     fill_star_center(res)
 
-    a = calc_star_shift()
-    for i in range(EXP_AMOUNT - 1):
+    s = S_calculate()
+    for i in range(EXP_NUMBER - 1):
         res[i].extend(combination(res[i][1:FACTORS_NUMBER + 1]))
-        res[i].extend(shifted_points(res[i][1:FACTORS_NUMBER + 1], a))
+        res[i].extend(shifted_points(res[i][1:FACTORS_NUMBER + 1], s))
 
     return res
 

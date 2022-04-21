@@ -23,15 +23,14 @@ class MainWindow(QMainWindow):
         self.btn_set.clicked.connect(self.set)
 
         self.b = list()
-        self.equation_window = EquationWindow()
 
-        self.star_length = calc_star_length()
-        self.label_length.setText(str(self.star_length))
+        self.S = S_calculate()
+        self.label_a.setText(str(self.S))
 
-        self.star_shift = calc_star_shift()
-        self.label_a.setText(str(self.star_shift))
+        self.ALPHA = ALPHA_calculate()
+        self.label_length.setText(str(self.ALPHA))
 
-        for i in range(1, EXP_AMOUNT + 2):
+        for i in range(1, EXP_NUMBER + 2):
             self.table_plan.setItem(i, 0, QTableWidgetItem(str(i)))
         self.fill_table()
 
@@ -74,7 +73,7 @@ class MainWindow(QMainWindow):
                 min_val = self.get_factor(entries[i][0])
                 max_val = self.get_factor(entries[i][1])
 
-                if -self.star_length < -1 - 2 * min_val / (max_val - min_val):
+                if -self.ALPHA < -1 - 2 * min_val / (max_val - min_val):
                     make_invalid(entries[i][0])
                     make_invalid(entries[i][1])
                     passed = False
@@ -162,7 +161,6 @@ class MainWindow(QMainWindow):
                 self.b = expand_plan(self.plan, self.custom_plan, y)
 
                 self.fill_table()
-                #self.set_equasion()
                 self.show_full_equasion()
 
 
@@ -215,7 +213,7 @@ class MainWindow(QMainWindow):
             self.custom_plan[0] = [1]
             self.custom_plan[0].extend(factors)
             self.custom_plan[0].extend(combination(factors))
-            self.custom_plan[0].extend(shifted_points(factors, self.star_length))
+            self.custom_plan[0].extend(shifted_points(factors, self.ALPHA))
 
             for i in range(len(self.custom_plan)):
                 for j in range(len(self.custom_plan[i])):
