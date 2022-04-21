@@ -1,6 +1,5 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
-from equationwindow import *
 from experiment_math import *
 from model import *
 from validentry import *
@@ -25,10 +24,10 @@ class MainWindow(QMainWindow):
         self.b = list()
 
         self.S = S_calculate()
-        self.label_a.setText(str(self.S))
+        self.label_a.setText(str(round(self.S, 4)))
 
         self.ALPHA = ALPHA_calculate()
-        self.label_length.setText(str(self.ALPHA))
+        self.label_length.setText(str(round(self.ALPHA, 4)))
 
         for i in range(1, EXP_NUMBER + 2):
             self.table_plan.setItem(i, 0, QTableWidgetItem(str(i)))
@@ -38,12 +37,12 @@ class MainWindow(QMainWindow):
 
 
     def get_entries(self):
-        return ([self.entry_gen1_int_min, self.entry_gen1_int_max],
+        return [[self.entry_gen1_int_min, self.entry_gen1_int_max],
                 [self.entry_gen1_var_min, self.entry_gen1_var_max],
                 [self.entry_proc1_int_min, self.entry_proc1_int_max],
                 [self.entry_gen2_int_min, self.entry_gen2_int_max],
                 [self.entry_gen2_var_min, self.entry_gen2_var_max],
-                [self.entry_proc2_int_min, self.entry_proc2_int_max])
+                [self.entry_proc2_int_min, self.entry_proc2_int_max]]
 
 
     def get_factor(self, entry):
@@ -58,15 +57,7 @@ class MainWindow(QMainWindow):
 
     def check_factors(self):
         passed = True
-        entries = [
-            [self.entry_gen1_int_min, self.entry_gen1_int_max],
-            [self.entry_gen1_var_min, self.entry_gen1_var_max],
-            [self.entry_proc1_int_min, self.entry_proc1_int_max],
-
-            [self.entry_gen2_int_min, self.entry_gen2_int_max],
-            [self.entry_gen2_var_min, self.entry_gen2_var_max],
-            [self.entry_proc2_int_min, self.entry_proc2_int_max]
-        ]
+        entries = self.get_entries()
 
         for i in range(len(entries)):
             try:
@@ -175,20 +166,11 @@ class MainWindow(QMainWindow):
                                         QTableWidgetItem(str(round(self.custom_plan[i][j], 3))))
 
 
-    def set_equasion(self, accuracy=4):
-        if len(self.b) == 70:
-            entries = self.get_entries()
-            y = form_equasion(self.b, accuracy, entries)
-            y = y.replace("+ -", "- ")
-            y = y.replace("+ \n-", "-\n")
-            self.label_y.setText(y)
-
-
     def show_full_equasion(self):
         accuracy = 4
         if len(self.b) == 70:
             entries = self.get_entries()
-            y = form_equasion(self.b, accuracy, entries)
+            y = form_equasion(self.b, self.S, accuracy, entries)
             y = y.replace("+ -", "- ")
             y = y.replace("+ \n-", "-\n")
             self.label_y.setText(y)

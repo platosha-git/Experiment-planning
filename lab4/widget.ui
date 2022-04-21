@@ -1038,7 +1038,7 @@
      <rect>
       <x>10</x>
       <y>370</y>
-      <width>321</width>
+      <width>261</width>
       <height>81</height>
      </rect>
     </property>
@@ -1380,9 +1380,9 @@
    <widget class="QTextBrowser" name="label_y">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>300</x>
       <y>370</y>
-      <width>1461</width>
+      <width>1521</width>
       <height>101</height>
      </rect>
     </property>
