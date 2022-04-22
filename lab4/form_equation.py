@@ -2,28 +2,40 @@ def show_eq_full_equal(b_self, s, accuracy, value = 0):
     b = b_self
     if (value == 1):
         b[4] = b[1]
+        b[67] = b[64]
     elif (value == 2):
         b[5] = b[2]
+        b[68] = b[65]
     elif (value == 3):
         b[6] = b[3]
+        b[69] = b[66]
     elif (value == 12):
         b[4] = b[1]
         b[5] = b[2]
+        b[67] = b[64]
+        b[68] = b[65]
     elif (value == 13):
         b[4] = b[1]
         b[6] = b[3]
+        b[67] = b[64]
+        b[69] = b[66]
     elif (value == 23):
         b[5] = b[2]
         b[6] = b[3]
+        b[68] = b[65]
+        b[69] = b[66]
     elif (value == 123):
         b[4] = b[1]
         b[5] = b[2]
         b[6] = b[3]
+        b[67] = b[64]
+        b[68] = b[65]
+        b[69] = b[66]
         
     y = "y = " + str(round(abs(b[0]), accuracy)) + " + " + \
-                str(round(abs(b[1]), accuracy)) + "x1 + " + str(round(b[2], accuracy)) + "x2 - " + \
+                str(round(abs(b[1]), accuracy)) + "x1 + " + str(round(abs(b[2]), accuracy)) + "x2 - " + \
                 str(round(abs(b[3]), accuracy)) + "x3 + " + str(round(abs(b[4]), accuracy)) + "x4 + " + \
-                str(round(b[5], accuracy)) + "x5 - " + str(round(abs(b[6]), accuracy)) + "x6 + \n" + \
+                str(round(abs(b[5]), accuracy)) + "x5 - " + str(round(abs(b[6]), accuracy)) + "x6 + \n" + \
                 str(round(b[7], accuracy)) + "x1x2 + " + str(round(b[8], accuracy)) + "x1x3 + " + \
                 str(round(b[9], accuracy)) + "x1x4 + " + str(round(b[10], accuracy)) + "x1x5 + " + \
                 str(round(b[11], accuracy)) + "x1x6 + " + str(round(b[12], accuracy)) + "x2x3 + " + \
@@ -53,12 +65,12 @@ def show_eq_full_equal(b_self, s, accuracy, value = 0):
                 str(round(b[59], accuracy)) + "x1x2x3x5x6 + " + str(round(b[60], accuracy)) + "x1x2x4x5x6 + " + \
                 str(round(b[61], accuracy)) + "x1x3x4x5x6 + " + str(round(b[62], accuracy)) + "x2x3x4x5x6 + " + \
                 str(round(b[63], accuracy)) + "x1x2x3x4x5x6 + \n" + \
-                str(round(b[64], accuracy)) + "(x1^2 - " + str(round(s, accuracy)) + ") + " + \
-                str(round(b[65], accuracy)) + "(x2^2 - " + str(round(s, accuracy)) + ") + " + \
-                str(round(b[66], accuracy)) + "(x3^2 - " + str(round(s, accuracy)) + ") + " + \
-                str(round(b[67], accuracy)) + "(x4^2 - " + str(round(s, accuracy)) + ") + " + \
-                str(round(b[68], accuracy)) + "(x5^2 - " + str(round(s, accuracy)) + ") + " + \
-                str(round(b[69], accuracy)) + "(x6^2 - " + str(round(s, accuracy)) + ")"
+                str(round(abs(b[64]), accuracy)) + "(x1^2 - " + str(round(s, accuracy)) + ") + " + \
+                str(round(abs(b[65]), accuracy)) + "(x2^2 - " + str(round(s, accuracy)) + ") - " + \
+                str(round(abs(b[66]), accuracy)) + "(x3^2 - " + str(round(s, accuracy)) + ") + " + \
+                str(round(abs(b[67]), accuracy)) + "(x4^2 - " + str(round(s, accuracy)) + ") + " + \
+                str(round(abs(b[68]), accuracy)) + "(x5^2 - " + str(round(s, accuracy)) + ") - " + \
+                str(round(abs(b[69]), accuracy)) + "(x6^2 - " + str(round(s, accuracy)) + ")"
     return y
 
 
